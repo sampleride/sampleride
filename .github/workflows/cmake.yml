@@ -32,3 +32,14 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
+    - name: Zip artifacts
+      uses: TheDoctor0/zip-release@0.7.1
+      with:
+        type: zip
+        filename: sampleride.zip
+        path: build
+        
+    - uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: sampleride.zip
