@@ -87,6 +87,25 @@ namespace s_preview
             "   gl_FragColor = vec4(col, 1.0);\n"
             "}\n";
 
+    QList<GLfloat> Renderer::addQuad(QVector3D a, QVector3D b, QVector3D c)
+    {
+        QVector3D d = QVector3D::crossProduct(b - a, c - b) + a;
+        return {a.x(), a.y(), a.z(), b.x(), b.y(), b.z(), c.x(), c.y(), c.z(),
+                a.x(), a.y(), a.z(), c.x(), c.y(), c.z(), d.x(), d.y(), d.z()};
+    }
+
+
+    QList<GLfloat> Renderer::addCube(QVector3D origin, float width, float height)
+    {
+        QList<GLfloat> res;
+
+//        res.append(addQuad(origin, QVector3D(origin.x() + width, origin.y() + height, origin.z())));
+//        res.append(addQuad(QVector3D(origin.x() + width, origin.y(), origin.z()), QVector3D(origin.x() + width, origin.y() + height, origin.z() + width)));
+//        res.append(addQuad(QVector3D(origin.x() + width, origin.y(), origin.z() + width), QVector3D(origin.x() + width, origin.y() + height, origin.z() + width)));
+//        res.append(addQuad(QVector3D(origin.x(), origin.y(), origin.z() + width), QVector3D(origin.x(), origin.y() + height, origin.z())));
+        return res;
+    }
+
     void Renderer::initializeGL()
     {
         connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &Renderer::cleanup);
@@ -114,8 +133,11 @@ namespace s_preview
         // TODO initialize vertex attributes
 
         // add a triangle
-        QList<GLfloat> data = {0.1, 0.1, 0.1, 0.3, 0.1, 0.1, 0.3, 0.3, 0.1,
-                               0.3, 0.3, 0.1, 0.3, 0.3, 0.3, 0.3, 0.1, 0.1};
+        //QList<GLfloat> data = {0.1, 0.1, 0.1, 0.3, 0.1, 0.1, 0.3, 0.3, 0.1,
+        //                       0.3, 0.3, 0.1, 0.3, 0.3, 0.3, 0.3, 0.1, 0.1};
+
+        QList<GLfloat> data = addQuad({0.1, 0.1, 0.1}, {0.3, 0.1, 0.1}, {0.3, 0.2, 0.3});
+        //QList<GLfloat> data = addCube(QVector3D(0.1, 0.1, 0.1), 0.2, 0.2);
         points = data.size();
         size_t verts = data.size() / 3;
 
@@ -128,8 +150,8 @@ namespace s_preview
         QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
         f->glEnableVertexAttribArray(0);
         f->glEnableVertexAttribArray(1);
-        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat), nullptr);
-        f->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat), reinterpret_cast<void*>(points * sizeof(GLfloat)));
+        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+        f->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<void*>(points * sizeof(GLfloat)));
         vbo.release();
 
         mat.camera.setToIdentity();
@@ -143,7 +165,7 @@ namespace s_preview
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
+        //glEnable(GL_CULL_FACE); // TODO enable this on production
 
         mat.world.setToIdentity();
         mat.world.rotate(180.0f - ((float)rot.x / 16.0f), 1, 0, 0);

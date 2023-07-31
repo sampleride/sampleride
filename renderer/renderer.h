@@ -59,9 +59,13 @@ namespace s_preview
 
     public slots:
         void cleanup();
-        void setRotation(QPair<int, Direction> angle);
+        void setRotation(QPair<int, s_preview::Direction> angle);
 
     protected:
+        static QList<GLfloat> addQuad(QVector3D a, QVector3D b, QVector3D c);
+
+        static QList<GLfloat> addCube(QVector3D origin, float width, float height);
+
         void initializeGL() override;
 
         void paintGL() override;
