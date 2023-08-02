@@ -6,6 +6,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+include_directories(.)
 
 find_package(Qt6 COMPONENTS
   Core
@@ -15,7 +16,8 @@ find_package(Qt6 COMPONENTS
   OpenGL
   OpenGLWidgets
 )
-add_executable(sampleride main.cpp renderer/renderer.h renderer/renderer.cpp)
+add_executable(sampleride main.cpp renderer/renderer.h renderer/renderer.cpp model/model.h model/model.cpp
+        preview/preview.cpp preview/preview.h api/classes.h api/classes.cpp mainwindow/mainwindow.h mainwindow/mainwindow.cpp)
 target_link_libraries(sampleride PRIVATE
   Qt::Core
   Qt::Gui

@@ -1,11 +1,13 @@
 #include <QApplication>
 #include <QPushButton>
 
-#include "renderer/renderer.h"
+#include "mainwindow/mainwindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    s_preview::Renderer renderer;
-    renderer.show();
+
+    sampleride::MainWindow wid;
+    wid.show();
+
     return QApplication::exec();
 }
