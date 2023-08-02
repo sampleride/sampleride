@@ -14,12 +14,12 @@ namespace sampleride
 {
 
     class Preview : public QWidget {
+        Q_OBJECT
     public:
         explicit Preview(QWidget* parent = nullptr, Classes* _classes = nullptr);
-
     protected:
+        void paintEvent(QPaintEvent* event) override;
         Classes* classes = nullptr;
-        QPainter qp;
     };
 
 } // namespace sampleride

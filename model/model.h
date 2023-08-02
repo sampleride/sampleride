@@ -14,21 +14,22 @@ namespace sampleride
 
     class Model : public QWidget
     {
+        Q_OBJECT
     public:
         explicit Model(QWidget *parent = nullptr);
 
         ~Model() noexcept;
 
-        QPointF base_size() const
+        const QPointF& base_size() const
         { return _base_size; }
 
-        QRectF table_size() const
+        const QRectF& table_size() const
         { return _table_size; }
 
-        QPointF module_size() const
+        const QPointF& module_size() const
         { return _module_size; }
 
-        QPointF module_spacing() const
+        const QPointF& module_spacing() const
         { return _module_spacing; }
 
     protected:

@@ -23,6 +23,7 @@ namespace sampleride
 
     protected:
         Model _model;
+        Classes _classes;
     };
 
 

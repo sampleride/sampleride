@@ -6,7 +6,7 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    sampleride::MainWindow wid;
+    sampleride::MainWindow wid(nullptr);
     wid.show();
 
     return QApplication::exec();
