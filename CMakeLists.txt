@@ -17,7 +17,11 @@ find_package(Qt6 COMPONENTS
   OpenGLWidgets
 )
 add_executable(sampleride main.cpp renderer/renderer.h renderer/renderer.cpp model/model.h model/model.cpp
-        preview/preview.cpp preview/preview.h api/classes.h api/classes.cpp mainwindow/mainwindow.h mainwindow/mainwindow.cpp)
+        preview/preview.cpp preview/preview.h api/classes.h api/classes.cpp mainwindow/mainwindow.h mainwindow/mainwindow.cpp
+        module/module.cpp
+        module/module.h
+        module/manager.cpp
+        module/manager.h)
 target_link_libraries(sampleride PRIVATE
   Qt::Core
   Qt::Gui

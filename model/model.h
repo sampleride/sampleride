@@ -7,16 +7,16 @@
 
 #include <QPoint>
 #include <QRect>
-#include <QWidget>
+#include <QObject>
 
 namespace sampleride
 {
 
-    class Model : public QWidget
+    class Model : public QObject
     {
         Q_OBJECT
     public:
-        explicit Model(QWidget *parent = nullptr);
+        explicit Model(QObject *parent = nullptr);
 
         ~Model() noexcept;
 

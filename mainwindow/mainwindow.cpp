@@ -7,7 +7,7 @@
 namespace sampleride
 {
 
-    MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags) : QMainWindow(parent, flags), _model(this), _classes(&_model, this)
+    MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags) : QMainWindow(parent, flags), _model(nullptr), _manager(this), _classes(&_model, &_manager, this)
     {
         setMinimumSize(800, 600);
 

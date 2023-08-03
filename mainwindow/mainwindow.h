@@ -12,6 +12,7 @@
 #include "preview/preview.h"
 #include "api/classes.h"
 #include "model/model.h"
+#include "module/manager.h"
 
 namespace sampleride
 {
@@ -23,6 +24,7 @@ namespace sampleride
 
     protected:
         Model _model;
+        ModuleManager _manager;
         Classes _classes;
     };
 
