@@ -10,6 +10,7 @@
 
 #include "api/classes.h"
 #include "module/manager.h"
+#include "model/model.h"
 
 namespace sampleride
 {
@@ -18,10 +19,9 @@ namespace sampleride
     class Preview : public QWidget {
         Q_OBJECT
     public:
-        explicit Preview(QWidget* parent = nullptr, Classes* _classes = nullptr);
+        explicit Preview(QWidget* parent = nullptr);
     protected:
         void paintEvent(QPaintEvent* event) override;
-        Classes* classes = nullptr;
     };
 
 } // namespace sampleride

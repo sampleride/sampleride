@@ -27,12 +27,11 @@ namespace sampleride
     {
         Q_OBJECT
     public:
-        explicit Module(QObject* parent = nullptr, Classes* _classes = nullptr);
+        explicit Module(QObject* parent = nullptr);
         virtual void draw_preview(QPainter* qp) const = 0;
 
         const int _id = -1;
     protected:
-        Classes* classes;
         QString _name;
 
         QPoint _pos; // TODO add temporary data model
@@ -48,7 +47,7 @@ namespace sampleride
     {
         Q_OBJECT
     public:
-        explicit SimpleTray(QObject* parent = nullptr, Classes* _classes = nullptr);
+        explicit SimpleTray(QObject* parent = nullptr);
         void draw_preview(QPainter* qp) const override;
 
         const int _id = 0;

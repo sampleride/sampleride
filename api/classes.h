@@ -7,24 +7,26 @@
 
 #include <QObject>
 
-#include "model/model.h"
-
 namespace sampleride
 {
     class ModuleManager;
+    class Model;
+    class MainWindow;
 
     class Classes : public QObject
     {
     public:
-        explicit Classes(Model* m, ModuleManager* mm, QObject *parent = nullptr);
+        explicit Classes(QObject *parent = nullptr);
 
-        Model* model()
+        static Model* model()
         { return _model; };
-        ModuleManager* modulemanager()
+        static ModuleManager* modulemanager()
         { return _manager; };
     protected:
-        Model* _model = nullptr;
-        ModuleManager* _manager = nullptr;
+        static Model* _model;
+        static ModuleManager* _manager;
+
+        friend MainWindow;
     };
 
 } // namespace sampleride

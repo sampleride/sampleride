@@ -21,12 +21,9 @@ namespace sampleride
     {
     public:
         explicit MainWindow(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
-        Classes* getAPI()
-        { return &_classes; };
     protected:
         Model _model;
         ModuleManager _manager;
-        Classes _classes;
     };
 
 

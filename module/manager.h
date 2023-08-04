@@ -21,11 +21,8 @@ namespace sampleride
         explicit ModuleManager(QObject* parent = nullptr);
         void initModules();
         Module* getModule(int id);
-        void setAPI(Classes* _classes)
-        { classes = _classes; };
+
         QHash<int, Module*> modules;
-    protected:
-        Classes* classes;
     };
 
 } // namespace sampleride

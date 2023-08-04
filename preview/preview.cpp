@@ -7,10 +7,9 @@
 namespace sampleride
 {
 
-    Preview::Preview(QWidget* parent, Classes* _classes) : QWidget(parent)
+    Preview::Preview(QWidget* parent) : QWidget(parent)
     {
-        classes = _classes;
-        setMinimumSize(QSize(classes->model()->base_size().x(), classes->model()->base_size().y()));
+        setMinimumSize(QSize(sampleride::Classes::model()->base_size().x(), sampleride::Classes::model()->base_size().y()));
         //setStyleSheet("background-color: #ffffff;");
         QPalette pal = QPalette();
         pal.setColor(QPalette::Window, QColor(40, 40, 40));
@@ -23,7 +22,7 @@ namespace sampleride
         QPainter qp(this);
         qp.setRenderHint(QPainter::Antialiasing);
 
-        for (Module* m : classes->modulemanager()->modules)
+        for (Module* m : sampleride::Classes::modulemanager()->modules)
         {
             m->draw_preview(&qp);
         }

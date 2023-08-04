@@ -7,7 +7,7 @@
 namespace sampleride
 {
 
-    sampleride::ModuleManager::ModuleManager(QObject* parent) : QObject(parent), classes(nullptr)
+    sampleride::ModuleManager::ModuleManager(QObject* parent) : QObject(parent)
     {
 
     }
@@ -19,7 +19,7 @@ namespace sampleride
 
     void ModuleManager::initModules()
     {
-        SimpleTray* tray = new SimpleTray(this, classes);
+        SimpleTray* tray = new SimpleTray(this);
         Module* mod = qobject_cast<Module*>(tray);
 
         if (!mod)

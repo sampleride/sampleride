@@ -7,15 +7,16 @@
 namespace sampleride
 {
 
-    MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags) : QMainWindow(parent, flags), _model(nullptr), _manager(this), _classes(&_model, &_manager, this)
+    MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags) : QMainWindow(parent, flags), _model(this), _manager(this)
     {
         setMinimumSize(800, 600);
 
-        _manager.setAPI(&_classes);
+        sampleride::Classes::_model = &_model;
+        sampleride::Classes::_manager = &_manager;
 
         _manager.initModules();
 
-        Preview* preview = new Preview(this, &_classes);
+        Preview* preview = new Preview(this);
 
         QDockWidget *sdock = new QDockWidget("Sequence", this);
         sdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
