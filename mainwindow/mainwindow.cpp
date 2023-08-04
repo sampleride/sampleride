@@ -11,6 +11,10 @@ namespace sampleride
     {
         setMinimumSize(800, 600);
 
+        _manager.setAPI(&_classes);
+
+        _manager.initModules();
+
         Preview* preview = new Preview(this, &_classes);
 
         QDockWidget *sdock = new QDockWidget("Sequence", this);

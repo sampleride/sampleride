@@ -6,10 +6,9 @@
 
 namespace sampleride
 {
-    Classes::Classes(Model* m, ModuleManager* mm, QObject *parent) : QObject(parent)
+    Classes::Classes(Model* m, ModuleManager* mm, QObject *parent) : QObject(parent), _model(m), _manager(mm)
     {
-        _model = m;
-        _manager = mm;
+
     }
 
 } // namespace sampleride

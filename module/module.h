@@ -28,7 +28,7 @@ namespace sampleride
         Q_OBJECT
     public:
         explicit Module(QObject* parent = nullptr, Classes* _classes = nullptr);
-        virtual void draw_preview(QPainter* qp) const {};
+        virtual void draw_preview(QPainter* qp) const = 0;
 
         const int _id = -1;
     protected:

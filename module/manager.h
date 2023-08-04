@@ -18,13 +18,14 @@ namespace sampleride
     {
         Q_OBJECT
     public:
-        explicit ModuleManager(QObject* parent = nullptr, Classes* _classes = nullptr);
+        explicit ModuleManager(QObject* parent = nullptr);
+        void initModules();
         Module* getModule(int id);
         void setAPI(Classes* _classes)
         { classes = _classes; };
+        QHash<int, Module*> modules;
     protected:
         Classes* classes;
-        QHash<int, Module*> modules;
     };
 
 } // namespace sampleride

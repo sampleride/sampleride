@@ -7,7 +7,17 @@
 namespace sampleride
 {
 
-    sampleride::ModuleManager::ModuleManager(QObject* parent, Classes* _classes) : QObject(parent), classes(_classes)
+    sampleride::ModuleManager::ModuleManager(QObject* parent) : QObject(parent), classes(nullptr)
+    {
+
+    }
+
+    Module* ModuleManager::getModule(int id)
+    {
+        return modules[id];
+    }
+
+    void ModuleManager::initModules()
     {
         SimpleTray* tray = new SimpleTray(this, classes);
         Module* mod = qobject_cast<Module*>(tray);
@@ -17,11 +27,6 @@ namespace sampleride
             // could not cast
         }
         modules[tray->_id] = mod;
-    }
-
-    Module* ModuleManager::getModule(int id)
-    {
-        return modules[id];
     }
 
 } // namespace sampleride

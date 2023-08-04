@@ -8,20 +8,20 @@
 #include <QObject>
 
 #include "model/model.h"
-#include "module/manager.h"
 
 namespace sampleride
 {
+    class ModuleManager;
 
     class Classes : public QObject
     {
     public:
         explicit Classes(Model* m, ModuleManager* mm, QObject *parent = nullptr);
 
-        Model& model()
-        { return *_model; };
-        ModuleManager& modulemanager()
-        { return *_manager; };
+        Model* model()
+        { return _model; };
+        ModuleManager* modulemanager()
+        { return _manager; };
     protected:
         Model* _model = nullptr;
         ModuleManager* _manager = nullptr;

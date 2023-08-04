@@ -9,9 +9,11 @@
 #include <QWidget>
 
 #include "api/classes.h"
+#include "module/manager.h"
 
 namespace sampleride
 {
+    class Module;
 
     class Preview : public QWidget {
         Q_OBJECT
