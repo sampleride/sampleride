@@ -7,6 +7,9 @@
 
 #include <QPainter>
 #include <QWidget>
+#include <QTransform>
+#include <QMouseEvent>
+#include <cmath>
 
 #include "api/classes.h"
 #include "module/manager.h"
@@ -22,6 +25,15 @@ namespace sampleride
         explicit Preview(QWidget* parent = nullptr);
     protected:
         void paintEvent(QPaintEvent* event) override;
+        void mousePressEvent(QMouseEvent* event) override;
+        void mouseMoveEvent(QMouseEvent* event) override;
+        void wheelEvent(QWheelEvent* event) override;
+
+        QTransform scale_tr;
+        QTransform pos_tr;
+        float scale;
+        QPointF pos;
+        QPointF lastPos;
     };
 
 } // namespace sampleride

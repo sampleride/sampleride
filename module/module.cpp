@@ -26,10 +26,10 @@ namespace sampleride
     {
         qp->setPen(QPen(QBrush(_color), 2));
         int px = int(sampleride::Classes::model()->module_size().x() + sampleride::Classes::model()->module_spacing().x()) * _pos.x() +
-                sampleride::Classes::model()->module_spacing().x();
+                sampleride::Classes::model()->module_spacing().x() + sampleride::Classes::model()->table_size().x();
         int py = int(sampleride::Classes::model()->module_size().y() + sampleride::Classes::model()->module_spacing().y()) * _pos.y() +
-                sampleride::Classes::model()->module_spacing().y();
+                sampleride::Classes::model()->module_spacing().y() + sampleride::Classes::model()->table_size().y();
         qp->drawRect(px, py,_size.width(), _size.height());
-        qp->drawText(px + 5, py + 14, _name);
+        qp->drawText(px, py - 5, _name);
     }
 } // namespace sampleride
