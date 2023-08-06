@@ -43,15 +43,7 @@ namespace sampleride
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            if (lastPos.x() - event->position().x() > 0)
-                pos.setX(pos.x() - event->position().x() / 100);
-            else
-                pos.setX(pos.x() + event->position().x() / 100);
-
-            if (lastPos.y() - event->position().y() > 0)
-                pos.setY(pos.y() - event->position().y() / 100);
-            else
-                pos.setY(pos.y() + event->position().y() / 100);
+            pos = event->position() - lastPos;
 
             pos_tr = QTransform::fromTranslate(pos.x(), pos.y());
         }
@@ -63,7 +55,7 @@ namespace sampleride
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            lastPos = event->position();
+            lastPos = event->position() - pos;
         }
     }
 
