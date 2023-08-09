@@ -57,6 +57,18 @@ namespace sampleride
         {
             lastPos = event->position() - pos;
         }
+        else if (event->buttons() & Qt::RightButton)
+        {
+            QPointF xy = (event->position() - pos) / scale;
+            QPointF topleft = sampleride::Classes::model()->table_size().topLeft(), bottomright = sampleride::Classes::model()->table_size().bottomRight();
+
+            if ((xy - topleft).x() >= 0 && (xy - topleft).y() >= 0 &&
+                    (bottomright - xy).x() >= 0 && (bottomright - xy).y() >= 0)
+            {
+                std::cout << xy.x() << "; " << xy.y() << std::endl;
+                serial.move(QVector3D(0, 0, 0), QVector3D(xy.x(), xy.y(), 0));
+            }
+        }
     }
 
     void Preview::wheelEvent(QWheelEvent* event)

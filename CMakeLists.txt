@@ -15,18 +15,22 @@ find_package(Qt6 COMPONENTS
   REQUIRED COMPONENTS
   OpenGL
   OpenGLWidgets
+  SerialPort
 )
 add_executable(sampleride main.cpp renderer/renderer.h renderer/renderer.cpp model/model.h model/model.cpp
         preview/preview.cpp preview/preview.h api/classes.h api/classes.cpp mainwindow/mainwindow.h mainwindow/mainwindow.cpp
         module/module.cpp
         module/module.h
         module/manager.cpp
-        module/manager.h)
+        module/manager.h
+        server/server.cpp
+        server/server.h)
 target_link_libraries(sampleride PRIVATE
   Qt::Core
   Qt::Gui
   Qt::Widgets
   Qt::OpenGL
   Qt::OpenGLWidgets
+  Qt::SerialPort
 )
 

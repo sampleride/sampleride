@@ -11,9 +11,12 @@
 #include <QMouseEvent>
 #include <cmath>
 
+#include <iostream>
+
 #include "api/classes.h"
 #include "module/manager.h"
 #include "model/model.h"
+#include "server/server.h"
 
 namespace sampleride
 {
@@ -34,6 +37,7 @@ namespace sampleride
         float scale;
         QPointF pos;
         QPointF lastPos;
+        SamSerial serial;
     };
 
 } // namespace sampleride
