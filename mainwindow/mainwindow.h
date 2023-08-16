@@ -8,6 +8,11 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QDockWidget>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QComboBox>
+#include <QPushButton>
+#include <QSpacerItem>
 
 #include "preview/preview.h"
 #include "api/classes.h"
@@ -22,6 +27,8 @@ namespace sampleride
     public:
         explicit MainWindow(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     protected:
+        void initToolbar(Preview* preview);
+
         Model _model;
         ModuleManager _manager;
     };

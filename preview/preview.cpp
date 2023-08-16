@@ -91,4 +91,14 @@ namespace sampleride
 
         update();
     }
+
+    void Preview::home()
+    {
+        serial.home();
+    }
+
+    void Preview::halt()
+    {
+        serial.halt();
+    }
 } // namespace sampleride

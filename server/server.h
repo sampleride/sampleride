@@ -25,6 +25,8 @@ namespace sampleride
     public:
         explicit Server(QObject* parent = nullptr);
         virtual void move(QVector3D src, QVector3D dst) = 0;
+        virtual void home() = 0;
+        virtual void halt() = 0;
 
     protected:
         QMutex mut;
@@ -38,9 +40,12 @@ namespace sampleride
         explicit SamSerial(QObject* parent = nullptr);
         ~SamSerial() noexcept override;
         void move(QVector3D src, QVector3D dst) override;
+        void home() override;
+        void halt() override;
 
     protected:
         void run() override;
+        void send_gcode(QString& s);
 
         QString port_name;
         QString payload;

@@ -18,7 +18,7 @@ namespace sampleride
 
         Preview* preview = new Preview(this);
 
-        QDockWidget *sdock = new QDockWidget("Sequence", this);
+        QDockWidget* sdock = new QDockWidget("Sequence", this);
         sdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
         sdock->setFeatures(QDockWidget::DockWidgetMovable);
         QWidget* seq = new QWidget();
@@ -26,15 +26,53 @@ namespace sampleride
         sdock->setWidget(seq);
         addDockWidget(Qt::LeftDockWidgetArea, sdock);
 
-        QDockWidget *tdock = new QDockWidget("Timeline", this);
+        QDockWidget* tdock = new QDockWidget("Timeline", this);
         tdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
         tdock->setFeatures(QDockWidget::DockWidgetMovable);
-        QWidget* tl = new QWidget();
+
+        initToolbar(preview);
+
+        QWidget* tl = new QWidget(this);
+
         tl->setMinimumSize(200, 100);
         tdock->setWidget(tl);
         addDockWidget(Qt::BottomDockWidgetArea, tdock);
 
         setCentralWidget(preview);
+    }
+
+    void MainWindow::initToolbar(Preview* preview)
+    {
+        QDockWidget* tooldock = new QDockWidget("Tools", this);
+        tooldock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+        tooldock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+        tooldock->setTitleBarWidget(new QWidget());
+
+        QHBoxLayout* toolWrapper = new QHBoxLayout(this);
+        QHBoxLayout* tool = new QHBoxLayout(this);
+
+        QPushButton* home_act = new QPushButton("Home", this);
+        connect(home_act, &QPushButton::clicked, preview, &Preview::home);
+        QPushButton* halt_act = new QPushButton("Halt", this);
+        connect(halt_act, &QPushButton::clicked, preview, &Preview::halt);
+
+        tool->addWidget(home_act);
+        tool->addWidget(halt_act);
+
+        QSpacerItem* spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding);
+
+        tool->addSpacerItem(spacer);
+
+        QComboBox* combo = new QComboBox(this);
+        QWidget* wid = new QWidget(this);
+        wid->setLayout(toolWrapper);
+
+        toolWrapper->addWidget(combo);
+        toolWrapper->addLayout(tool);
+
+        tooldock->setWidget(wid);
+
+        addDockWidget(Qt::TopDockWidgetArea, tooldock);
     }
 
 } // namespace sampleride

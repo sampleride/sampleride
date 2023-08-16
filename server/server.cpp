@@ -19,12 +19,7 @@ namespace sampleride
     void SamSerial::move(QVector3D src, QVector3D dst)
     {
         QString res = QString("G1 X%1 Y%2 Z%3\n").arg(QString::number(int(dst.x())), QString::number(int(dst.y())), QString::number(int(dst.z())));
-        const QMutexLocker locker(&mut);
-        payload = res;
-        if (!isRunning())
-            start();
-        else
-            wait_cond.wakeOne();
+        send_gcode(res);
     }
 
     void SamSerial::run()
@@ -80,5 +75,27 @@ namespace sampleride
         wait_cond.wakeOne();
         mut.unlock();
         wait();
+    }
+
+    void SamSerial::home()
+    {
+        QString res = "G28\n";
+        send_gcode(res);
+    }
+
+    void SamSerial::send_gcode(QString &s)
+    {
+        const QMutexLocker locker(&mut);
+        payload = s;
+        if (!isRunning())
+            start();
+        else
+            wait_cond.wakeOne();
+    }
+
+    void SamSerial::halt()
+    {
+        QString res = "M18\n";
+        send_gcode(res);
     }
 } // sampleride

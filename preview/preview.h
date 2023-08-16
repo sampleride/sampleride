@@ -26,6 +26,9 @@ namespace sampleride
         Q_OBJECT
     public:
         explicit Preview(QWidget* parent = nullptr);
+    public slots:
+        void home();
+        void halt();
     protected:
         void paintEvent(QPaintEvent* event) override;
         void mousePressEvent(QMouseEvent* event) override;
