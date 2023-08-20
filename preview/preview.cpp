@@ -17,6 +17,7 @@ namespace sampleride
         setPalette(pal);
 
         scale_tr = scale_tr.scale(1.1, 1.1);
+        std::srand(std::time(nullptr));
     }
 
     void Preview::paintEvent(QPaintEvent* event)
@@ -56,14 +57,12 @@ namespace sampleride
         if (event->buttons() & Qt::LeftButton)
         {
             lastPos = event->position() - pos;
+            pos_old = pos;
         }
         else if (event->buttons() & Qt::RightButton)
         {
-            QPointF xy = (event->position() - pos) / scale;
-            QPointF topleft = sampleride::Classes::model()->table_size().topLeft(), bottomright = sampleride::Classes::model()->table_size().bottomRight();
-
-            if ((xy - topleft).x() >= 0 && (xy - topleft).y() >= 0 &&
-                    (bottomright - xy).x() >= 0 && (bottomright - xy).y() >= 0)
+            QPointF xy = event->position();
+            if (event2pos(xy))
             {
                 std::cout << xy.x() << "; " << xy.y() << std::endl;
                 serial.move(QVector3D(0, 0, 0), QVector3D(xy.x(), xy.y(), 0));
@@ -100,5 +99,50 @@ namespace sampleride
     void Preview::halt()
     {
         serial.halt();
+    }
+
+    void Preview::mouseReleaseEvent(QMouseEvent* event)
+    {
+        // Check if there was no drag
+        if (pos == pos_old)
+        {
+            QPointF m_pos = event->position();
+            if (event2module(m_pos))
+            {
+                QPoint module(int(m_pos.x()), int(m_pos.y()));
+                std::cout << "mod: " << module.x() << "; " << module.y() << std::endl;
+
+                if (sampleride::Classes::modulemanager()->module_pos.contains(module))
+                {
+                    sampleride::Classes::state()->module_select = module;
+                    //sampleride::Classes::modulemanager()->module_pos[module]->_color = QColor(std::rand() % 255, std::rand() % 255, std::rand() % 255);
+                    update();
+                    return;
+                }
+            }
+            sampleride::Classes::state()->module_select = QPoint(-1, -1);
+            update();
+        }
+    }
+
+    bool Preview::event2pos(QPointF &click_pos) const
+    {
+        click_pos = (click_pos - pos) / scale;
+        QPointF topleft = sampleride::Classes::model()->table_size().topLeft(),
+        bottomright = sampleride::Classes::model()->table_size().bottomRight();
+
+        return (click_pos - topleft).x() >= 0 && (click_pos - topleft).y() >= 0 &&
+            (bottomright - click_pos).x() >= 0 && (bottomright - click_pos).y() >= 0;
+    }
+
+    bool Preview::event2module(QPointF &click_pos) const
+    {
+        bool ok = event2pos(click_pos);
+        click_pos = QPointF((click_pos.x() - sampleride::Classes::model()->module_spacing().x() - sampleride::Classes::model()->table_size().x())
+                / (sampleride::Classes::model()->module_size().x() + sampleride::Classes::model()->module_spacing().x()),
+                       (click_pos.y() - sampleride::Classes::model()->module_spacing().y() - sampleride::Classes::model()->table_size().y())
+                  / (sampleride::Classes::model()->module_size().y() + sampleride::Classes::model()->module_spacing().y()));
+
+        return ok;
     }
 } // namespace sampleride

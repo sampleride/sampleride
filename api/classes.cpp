@@ -13,5 +13,6 @@ namespace sampleride
 
     Model* Classes::_model = nullptr;
     ModuleManager* Classes::_manager = nullptr;
+    State* Classes::_state = nullptr;
 
 } // namespace sampleride

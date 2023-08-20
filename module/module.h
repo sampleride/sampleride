@@ -8,8 +8,11 @@
 #include <QObject>
 #include <QPoint>
 #include <QPainter>
+#include <QHash>
+#include <QVariant>
 
 #include "api/classes.h"
+#include "state/state.h"
 
 namespace sampleride
 {
@@ -23,6 +26,23 @@ namespace sampleride
         Container = 5,
     };
 
+    class PhysicalModel : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit PhysicalModel(QObject* parent = nullptr, ModuleTypes* type = new ModuleTypes(ModuleTypes::None));
+        void setup_tray(QRectF vial_centers, QPointF spacing, QPoint vials_num, float radius);
+        QPointF get_pos() const;
+
+        ModuleTypes* _type;
+        QRectF _size;
+        QPointF _center;
+        QPoint _pos;
+        bool init;
+    protected:
+        QVariantHash _data;
+    };
+
     class Module : public QObject
     {
         Q_OBJECT
@@ -31,16 +51,13 @@ namespace sampleride
         virtual void draw_preview(QPainter* qp) const = 0;
 
         const int _id = -1;
-    protected:
+
         QString _name;
 
-        QPoint _pos; // TODO add temporary data model
         QColor _color;
 
         ModuleTypes _type;
-
-        QRectF _size;
-        QPointF _center; // TODO add physical model
+        PhysicalModel _model;
     };
 
     class SimpleTray : public Module

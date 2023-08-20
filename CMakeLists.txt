@@ -24,7 +24,9 @@ add_executable(sampleride main.cpp renderer/renderer.h renderer/renderer.cpp mod
         module/manager.cpp
         module/manager.h
         server/server.cpp
-        server/server.h)
+        server/server.h
+        state/state.h
+        state/state.cpp)
 target_link_libraries(sampleride PRIVATE
   Qt::Core
   Qt::Gui

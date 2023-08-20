@@ -12,6 +12,7 @@ namespace sampleride
     class ModuleManager;
     class Model;
     class MainWindow;
+    class State;
 
     class Classes : public QObject
     {
@@ -22,9 +23,12 @@ namespace sampleride
         { return _model; };
         static ModuleManager* modulemanager()
         { return _manager; };
+        static State* state()
+        { return _state; }
     protected:
         static Model* _model;
         static ModuleManager* _manager;
+        static State* _state;
 
         friend MainWindow;
     };

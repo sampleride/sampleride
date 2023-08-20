@@ -17,6 +17,7 @@
 #include "module/manager.h"
 #include "model/model.h"
 #include "server/server.h"
+#include "state/state.h"
 
 namespace sampleride
 {
@@ -32,14 +33,19 @@ namespace sampleride
     protected:
         void paintEvent(QPaintEvent* event) override;
         void mousePressEvent(QMouseEvent* event) override;
+        void mouseReleaseEvent(QMouseEvent* event) override;
         void mouseMoveEvent(QMouseEvent* event) override;
         void wheelEvent(QWheelEvent* event) override;
+
+        bool event2pos(QPointF& click_pos) const;
+        bool event2module(QPointF& click_pos) const;
 
         QTransform scale_tr;
         QTransform pos_tr;
         float scale;
         QPointF pos;
         QPointF lastPos;
+        QPointF pos_old;
         SamSerial serial;
     };
 

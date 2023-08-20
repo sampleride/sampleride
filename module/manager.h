@@ -23,6 +23,7 @@ namespace sampleride
         Module* getModule(int id);
 
         QHash<int, Module*> modules;
+        QHash<QPoint, Module*> module_pos;
     };
 
 } // namespace sampleride

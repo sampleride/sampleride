@@ -18,6 +18,7 @@
 #include "api/classes.h"
 #include "model/model.h"
 #include "module/manager.h"
+#include "state/state.h"
 
 namespace sampleride
 {
@@ -31,6 +32,7 @@ namespace sampleride
 
         Model _model;
         ModuleManager _manager;
+        State _state;
     };
 
 

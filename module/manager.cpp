@@ -27,6 +27,7 @@ namespace sampleride
             // could not cast
         }
         modules[tray->_id] = mod;
+        module_pos[tray->_model._pos] = mod;
     }
 
 } // namespace sampleride
