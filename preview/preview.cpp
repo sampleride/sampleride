@@ -15,6 +15,7 @@ namespace sampleride
         pal.setColor(QPalette::Window, QColor(10, 10, 10));
         setAutoFillBackground(true);
         setPalette(pal);
+        setMouseTracking(true);
 
         scale_tr = scale_tr.scale(1.1, 1.1);
         std::srand(std::time(nullptr));
@@ -22,6 +23,7 @@ namespace sampleride
 
     void Preview::paintEvent(QPaintEvent* event)
     {
+        std::cout << ".";
         QPainter qp(this);
         qp.setRenderHint(QPainter::Antialiasing);
 
@@ -47,9 +49,24 @@ namespace sampleride
             pos = event->position() - lastPos;
 
             pos_tr = QTransform::fromTranslate(pos.x(), pos.y());
-        }
 
-        update();
+            update();
+        }
+        else
+        {
+            QPointF m_pos = event->position();
+            if (event2module(m_pos))
+            {
+                QPoint module(int(m_pos.x()), int(m_pos.y()));
+
+                if (sampleride::Classes::modulemanager()->module_pos.contains(module))
+                {
+                    sampleride::Classes::state()->set_hover(module);
+                    return;
+                }
+            }
+            sampleride::Classes::state()->set_hover();
+        }
     }
 
     void Preview::mousePressEvent(QMouseEvent* event)
@@ -110,18 +127,14 @@ namespace sampleride
             if (event2module(m_pos))
             {
                 QPoint module(int(m_pos.x()), int(m_pos.y()));
-                std::cout << "mod: " << module.x() << "; " << module.y() << std::endl;
 
                 if (sampleride::Classes::modulemanager()->module_pos.contains(module))
                 {
-                    sampleride::Classes::state()->module_select = module;
-                    //sampleride::Classes::modulemanager()->module_pos[module]->_color = QColor(std::rand() % 255, std::rand() % 255, std::rand() % 255);
-                    update();
+                    sampleride::Classes::state()->set_selection(module);
                     return;
                 }
             }
-            sampleride::Classes::state()->module_select = QPoint(-1, -1);
-            update();
+            sampleride::Classes::state()->set_selection();
         }
     }
 

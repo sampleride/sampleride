@@ -22,17 +22,12 @@ namespace sampleride
         _model._pos = QPoint(0, 0);
 
         _name = QString("Simple tray");
-        _color = QColor(50, 230, 40);
+        //_color = new QColor(50, 230, 40);
     }
 
     void SimpleTray::draw_preview(QPainter* qp) const
     {
-        QColor fg(_color);
-        if (sampleride::Classes::state()->module_select == _model._pos)
-            fg = QColor(240, 240, 240);
-        // TODO move to ColorFactory
-
-        qp->setPen(QPen(QBrush(fg), 2));
+        qp->setPen(QPen(QBrush(*_color), 2));
         QPointF pt = _model.get_pos();
         qp->drawRect(int(pt.x()), int(pt.y()), _model._size.width(), _model._size.height());
         qp->drawText(int(pt.x()), int(pt.y()) - 5, _name);

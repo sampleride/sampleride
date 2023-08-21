@@ -13,6 +13,8 @@ namespace sampleride
     class Model;
     class MainWindow;
     class State;
+    class ColorFactory;
+    class Preview;
 
     class Classes : public QObject
     {
@@ -25,10 +27,16 @@ namespace sampleride
         { return _manager; };
         static State* state()
         { return _state; }
+        static ColorFactory* color()
+        { return _color; }
+        static Preview* preview()
+        { return _preview; }
     protected:
         static Model* _model;
         static ModuleManager* _manager;
         static State* _state;
+        static ColorFactory* _color;
+        static Preview* _preview;
 
         friend MainWindow;
     };

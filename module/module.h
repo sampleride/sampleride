@@ -12,19 +12,11 @@
 #include <QVariant>
 
 #include "api/classes.h"
+#include "api/enums.h"
 #include "state/state.h"
 
 namespace sampleride
 {
-    enum class ModuleTypes
-    {
-        None = 0,
-        Other = 1,
-        SingleTray = 2,
-        Tray = 3,
-        RectTray = 4,
-        Container = 5,
-    };
 
     class PhysicalModel : public QObject
     {
@@ -54,7 +46,7 @@ namespace sampleride
 
         QString _name;
 
-        QColor _color;
+        QColor* _color;
 
         ModuleTypes _type;
         PhysicalModel _model;

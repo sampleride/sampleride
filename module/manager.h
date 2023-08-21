@@ -7,8 +7,10 @@
 
 #include <QObject>
 #include <QHash>
+#include <iostream>
 
 #include "api/classes.h"
+#include "api/enums.h"
 #include "module/module.h"
 
 namespace sampleride
@@ -24,6 +26,24 @@ namespace sampleride
 
         QHash<int, Module*> modules;
         QHash<QPoint, Module*> module_pos;
+    public slots:
+        void set_color(QPoint module, ColorTypes col);
+    signals:
+        void update_preview();
+    };
+
+    class ColorFactory : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit ColorFactory(QObject* parent = nullptr);
+        QColor* getColor(int id, ColorTypes type);
+
+        QList<QColor*> _palette;
+        QList<QColor*> _hover;
+        QList<QColor*> _select;
+        QHash<int, size_t> module_map;
+        size_t used_colors;
     };
 
 } // namespace sampleride

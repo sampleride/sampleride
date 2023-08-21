@@ -25,6 +25,7 @@ namespace sampleride
 
     class MainWindow : public QMainWindow
     {
+        Q_OBJECT
     public:
         explicit MainWindow(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     protected:
@@ -33,6 +34,7 @@ namespace sampleride
         Model _model;
         ModuleManager _manager;
         State _state;
+        ColorFactory _color;
     };
 
 

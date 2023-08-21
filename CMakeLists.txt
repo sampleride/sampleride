@@ -17,8 +17,17 @@ find_package(Qt6 COMPONENTS
   OpenGLWidgets
   SerialPort
 )
-add_executable(sampleride main.cpp renderer/renderer.h renderer/renderer.cpp model/model.h model/model.cpp
-        preview/preview.cpp preview/preview.h api/classes.h api/classes.cpp mainwindow/mainwindow.h mainwindow/mainwindow.cpp
+add_executable(sampleride
+        main.cpp
+        model/model.h
+        model/model.cpp
+        preview/preview.cpp
+        preview/preview.h
+        api/classes.h
+        api/classes.cpp
+        api/enums.h
+        mainwindow/mainwindow.h
+        mainwindow/mainwindow.cpp
         module/module.cpp
         module/module.h
         module/manager.cpp
