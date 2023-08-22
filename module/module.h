@@ -23,8 +23,9 @@ namespace sampleride
         Q_OBJECT
     public:
         explicit PhysicalModel(QObject* parent = nullptr, ModuleTypes* type = new ModuleTypes(ModuleTypes::None));
-        void setup_tray(QRectF vial_centers, QPointF spacing, QPoint vials_num, float radius);
+        void setup_tray(QRectF vial_centers, QPoint vials_num, float radius);
         QPointF get_pos() const;
+        QList<QRectF>* get_vials() const;
 
         ModuleTypes* _type;
         QRectF _size;

@@ -13,6 +13,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QSpacerItem>
+#include <QOpenGLWidget>
 
 #include "preview/preview.h"
 #include "api/classes.h"
@@ -35,6 +36,7 @@ namespace sampleride
         ModuleManager _manager;
         State _state;
         ColorFactory _color;
+        QOpenGLWidget opengl;
         Preview* preview;
     };
 

@@ -8,7 +8,7 @@ namespace sampleride
 {
 
     MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags) : QMainWindow(parent, flags), _model(this), _manager(this),
-                                                                     _state(this), _color(this)
+                                                                     _state(this), _color(this), opengl(this)
     {
         setMinimumSize(800, 600);
 
@@ -28,7 +28,7 @@ namespace sampleride
         QDockWidget* sdock = new QDockWidget("Sequence", this);
         sdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
         sdock->setFeatures(QDockWidget::DockWidgetMovable);
-        QWidget* seq = new QWidget();
+        QWidget* seq = new QWidget(this);
         seq->setMinimumSize(200, 400);
         sdock->setWidget(seq);
         addDockWidget(Qt::LeftDockWidgetArea, sdock);
@@ -45,7 +45,10 @@ namespace sampleride
         tdock->setWidget(tl);
         addDockWidget(Qt::BottomDockWidgetArea, tdock);
 
-        setCentralWidget(preview);
+        QHBoxLayout* opengl_lay = new QHBoxLayout(this);
+        opengl_lay->addWidget(preview);
+        opengl.setLayout(opengl_lay);
+        setCentralWidget(&opengl);
     }
 
     void MainWindow::initToolbar(Preview* preview)
