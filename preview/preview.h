@@ -30,6 +30,7 @@ namespace sampleride
     public slots:
         void home();
         void halt();
+        void repaint_canvas();
     protected:
         void paintEvent(QPaintEvent* event) override;
         void mousePressEvent(QMouseEvent* event) override;

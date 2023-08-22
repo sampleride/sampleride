@@ -35,6 +35,7 @@ namespace sampleride
         ModuleManager _manager;
         State _state;
         ColorFactory _color;
+        Preview* preview;
     };
 
 

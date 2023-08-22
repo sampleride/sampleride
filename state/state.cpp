@@ -23,7 +23,7 @@ namespace sampleride
 
     void State::set_hover(QPoint module, QPoint tray)
     {
-        if (module_hover != none_pos && module_hover != module_select)
+        if (module_hover != none_pos && module_hover != module_select && module_hover != module)
             emit set_color(module_hover, ColorTypes::FG);
         module_hover = module;
         tray_hover = tray;
@@ -41,7 +41,7 @@ namespace sampleride
 
     void State::set_selection(QPoint module, QPoint tray)
     {
-        if (module_select != none_pos)
+        if (module_select != none_pos && module_hover != module)
             emit set_color(module_select, ColorTypes::FG);
         module_select = module;
         tray_select = tray;

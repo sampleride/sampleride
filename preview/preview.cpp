@@ -23,7 +23,7 @@ namespace sampleride
 
     void Preview::paintEvent(QPaintEvent* event)
     {
-        std::cout << ".";
+        //std::cout << ".";
         QPainter qp(this);
         qp.setRenderHint(QPainter::Antialiasing);
 
@@ -157,5 +157,10 @@ namespace sampleride
                   / (sampleride::Classes::model()->module_size().y() + sampleride::Classes::model()->module_spacing().y()));
 
         return ok;
+    }
+
+    void Preview::repaint_canvas()
+    {
+        update();
     }
 } // namespace sampleride

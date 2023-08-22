@@ -21,9 +21,9 @@ namespace sampleride
 
         connect(&_state, &State::set_color, &_manager, &ModuleManager::set_color);
 
-        Preview* preview = new Preview(this);
+        preview = new Preview(this);
         sampleride::Classes::_preview = preview;
-        connect(&_manager, SIGNAL(&ModuleManager::update_preview), preview, SLOT(&Preview::update));
+        connect(&_manager, &ModuleManager::update_preview, preview, &Preview::repaint_canvas);
 
         QDockWidget* sdock = new QDockWidget("Sequence", this);
         sdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);

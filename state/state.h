@@ -27,7 +27,6 @@ namespace sampleride
         QPoint module_select;
         QPoint tray_select;
         QPoint module_hover;
-
         QPoint tray_hover;
 
         static QPoint none_pos;

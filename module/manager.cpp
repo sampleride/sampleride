@@ -39,6 +39,7 @@ namespace sampleride
         QColor* new_color = sampleride::Classes::color()->getColor(mod->_id, col);
         if (mod->_color != new_color)
         {
+            //std::cout << ".";
             mod->_color = new_color;
             emit update_preview();
         }
