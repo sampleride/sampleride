@@ -46,6 +46,7 @@ namespace sampleride
         addDockWidget(Qt::BottomDockWidgetArea, tdock);
 
         QHBoxLayout* opengl_lay = new QHBoxLayout(this);
+        opengl_lay->setContentsMargins(0, 0, 0, 0);
         opengl_lay->addWidget(preview);
         opengl.setLayout(opengl_lay);
         setCentralWidget(&opengl);

@@ -40,6 +40,7 @@ namespace sampleride
 
         bool event2pos(QPointF& click_pos) const;
         bool event2module(QPointF& click_pos) const;
+        void event2modulesize(QPointF& module_pos) const;
 
         QTransform scale_tr;
         QTransform pos_tr;

@@ -15,7 +15,9 @@ namespace sampleride
         FG_HOVER = 2,
         BG_HOVER = 3,
         FG_SELECT = 4,
-        BG_SELECT = 5
+        BG_SELECT = 5,
+        FG_COMP_HOVER = 6,
+        FG_COMP_SELECT = 7
     };
 
     enum class ModuleTypes

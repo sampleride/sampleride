@@ -19,6 +19,7 @@ namespace sampleride
 
     void ModuleManager::initModules()
     {
+        // TODO load from config
         SimpleTray* tray = new SimpleTray(this);
         Module* mod = qobject_cast<Module*>(tray);
 
@@ -51,6 +52,8 @@ namespace sampleride
         {
             _hover.push_back(new QColor(col->toHsl().lighter(175)));
             _select.push_back(new QColor(col->toHsl().lighter(200)));
+            _comp_hover.push_back(new QColor(col->toHsl().darker(175)));
+            _comp_select.push_back(new QColor(col->toHsl().darker(200)));
         }
     }
 
@@ -64,6 +67,10 @@ namespace sampleride
                 return _hover[module_map[id]];
             case ColorTypes::FG_SELECT:
                 return _select[module_map[id]];
+            case ColorTypes::FG_COMP_HOVER:
+                return _comp_hover[module_map[id]];
+            case ColorTypes::FG_COMP_SELECT:
+                return _comp_select[module_map[id]];
         }
         return _palette[module_map[id]];
     }

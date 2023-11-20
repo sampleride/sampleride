@@ -62,10 +62,13 @@ namespace sampleride
                 if (sampleride::Classes::modulemanager()->module_pos.contains(module))
                 {
                     sampleride::Classes::state()->set_hover(module);
+                    event2modulesize(m_pos);
+                    sampleride::Classes::modulemanager()->module_pos[module]->_model.hover(m_pos);
                     return;
                 }
             }
             sampleride::Classes::state()->set_hover();
+            sampleride::Classes::state()->set_comp_hover();
         }
     }
 
@@ -162,5 +165,11 @@ namespace sampleride
     void Preview::repaint_canvas()
     {
         update();
+    }
+
+    void Preview::event2modulesize(QPointF &module_pos) const
+    {
+        module_pos.setX(module_pos.x() * sampleride::Classes::model()->module_size().x());
+        module_pos.setY(module_pos.y() * sampleride::Classes::model()->module_size().y());
     }
 } // namespace sampleride

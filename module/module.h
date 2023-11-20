@@ -26,21 +26,33 @@ namespace sampleride
         void setup_tray(QRectF vial_centers, QPoint vials_num, float radius);
         QPointF get_pos() const;
         QList<QRectF>* get_vials() const;
+        void hover(QPointF pos);
+        void click(QPointF pos);
 
         ModuleTypes* _type;
         QRectF _size;
         QPointF _center;
         QPoint _pos;
         bool init;
-    protected:
         QVariantHash _data;
+    };
+
+    class Vial : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit Vial(QObject* parent = nullptr);
+
+        int liquid;
+        QSet<int> liquids;
+        int volume_ml;
     };
 
     class Module : public QObject
     {
         Q_OBJECT
     public:
-        explicit Module(QObject* parent = nullptr);
+        explicit Module(QObject* parent = nullptr, QPoint vials = QPoint(0, 0));
         virtual void draw_preview(QPainter* qp) const = 0;
 
         const int _id = -1;
@@ -51,6 +63,8 @@ namespace sampleride
 
         ModuleTypes _type;
         PhysicalModel _model;
+        QList<QList<Vial*>> _vials;
+        QPoint vials_size;
     };
 
     class SimpleTray : public Module

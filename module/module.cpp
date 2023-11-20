@@ -4,11 +4,13 @@
 
 #include "module.h"
 #include "model/model.h"
+#include "module/manager.h"
 
 namespace sampleride
 {
 
-    sampleride::Module::Module(QObject* parent) : QObject(parent), _type(ModuleTypes::None), _model(this, &_type)
+    sampleride::Module::Module(QObject* parent, QPoint vials) : QObject(parent), _type(ModuleTypes::None), _model(this, &_type), vials_size(vials), _vials(vials.x(), QList<Vial*>(vials.y(),
+                                                                                                                                                                                        nullptr))
     {
 
     }
@@ -33,8 +35,16 @@ namespace sampleride
         qp->drawRect(int(pt.x()), int(pt.y()), _model._size.width(), _model._size.height());
         qp->drawText(int(pt.x()), int(pt.y()) - 5, _name);
 
-        for (QRectF rect : *_model.get_vials())
+        //for (QRectF rect : *_model.get_vials())
+        QPoint vials_num = _model._data["vials_num"].value<QPoint>();
+        for (size_t i = 0; i < _model.get_vials()->size(); i++)
         {
+            QRectF rect = _model.get_vials()->at(i);
+            QPoint comp = QPoint(i % vials_num.x(), i / vials_num.y());
+            if (sampleride::Classes::state()->comp_hover == comp)
+                qp->setPen(QPen(QBrush(*sampleride::Classes::color()->getColor(_id, ColorTypes::FG_COMP_HOVER)), 2));
+            else
+                qp->setPen(QPen(QBrush(*_color), 2));
             qp->drawEllipse(rect);
         }
     }
@@ -93,5 +103,31 @@ namespace sampleride
             return nullptr;
         }
         return _data["vials"].value<QList<QRectF>*>();
+    }
+
+    void PhysicalModel::hover(QPointF pos)
+    {
+        switch (*_type)
+        {
+            case ModuleTypes::Tray:
+                QRectF centers = _data["vial_centers"].value<QRectF>();
+                QPointF spacing = _data["spacing"].value<QPointF>();
+                float radius = _data["radius"].value<float>();
+
+                QPointF vial = QPointF(pos.x() / (2 * radius + spacing.x()), pos.y() / (2 * radius + spacing.y()));
+                // TODO add spacing check
+                sampleride::Classes::state()->set_comp_hover(vial.toPoint());
+                break;
+        }
+    }
+
+    void PhysicalModel::click(QPointF pos)
+    {
+
+    }
+
+    Vial::Vial(QObject* parent) : QObject(parent), liquid(-1), volume_ml(0)
+    {
+
     }
 } // namespace sampleride

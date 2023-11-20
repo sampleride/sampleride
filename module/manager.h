@@ -42,6 +42,8 @@ namespace sampleride
         QList<QColor*> _palette;
         QList<QColor*> _hover;
         QList<QColor*> _select;
+        QList<QColor*> _comp_hover;
+        QList<QColor*> _comp_select;
         QHash<int, size_t> module_map;
         size_t used_colors;
     };

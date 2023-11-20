@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -20,14 +20,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16b8202c-3d2f-48ec-a575-1930d657c426" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    <list default="true" id="16b8202c-3d2f-48ec-a575-1930d657c426" name="Changes" comment="Add tray rendering">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/enums.h" beforeDir="false" afterPath="$PROJECT_DIR$/api/enums.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainwindow/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/mainwindow/mainwindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mainwindow/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/mainwindow/mainwindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model.h" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/manager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/module/manager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/module/manager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/module.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/module/module.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/module.h" beforeDir="false" afterPath="$PROJECT_DIR$/module/module.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/preview/preview.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/preview/preview.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/preview/preview.h" beforeDir="false" afterPath="$PROJECT_DIR$/preview/preview.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/state.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/state/state.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/state.h" beforeDir="false" afterPath="$PROJECT_DIR$/state/state.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,41 +43,48 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="7ceac87d880743753a88bf64bc42d754362216ea" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2TRJ7IfB1cyPHSSLtosqYkEZqMl" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/flynn/src/sampleride",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C/C++",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/flynn/src/sampleride&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="sampleride" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="sampleride" TARGET_NAME="sampleride" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="sampleride" RUN_TARGET_NAME="sampleride">
+    <configuration name="sampleride" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="sampleride" TARGET_NAME="sampleride" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="sampleride" RUN_TARGET_NAME="sampleride">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -88,7 +99,76 @@
       <option name="presentableId" value="Default" />
       <updated>1690999790717</updated>
       <workItem from="1690999791707" duration="5014000" />
+      <workItem from="1691152246208" duration="5747000" />
+      <workItem from="1691247539810" duration="4255000" />
+      <workItem from="1691315613815" duration="676000" />
+      <workItem from="1691428871302" duration="193000" />
+      <workItem from="1691577260409" duration="10731000" />
+      <workItem from="1691756321107" duration="1484000" />
+      <workItem from="1691917606799" duration="22000" />
+      <workItem from="1692013860238" duration="3566000" />
+      <workItem from="1692090767051" duration="4415000" />
+      <workItem from="1692095525206" duration="67000" />
+      <workItem from="1692095597084" duration="58000" />
+      <workItem from="1692095660075" duration="429000" />
+      <workItem from="1692191863084" duration="1478000" />
+      <workItem from="1692273751623" duration="3746000" />
+      <workItem from="1692547168651" duration="710000" />
+      <workItem from="1692547881061" duration="1503000" />
+      <workItem from="1692549397634" duration="5922000" />
+      <workItem from="1692559794383" duration="804000" />
+      <workItem from="1692619408243" duration="3119000" />
+      <workItem from="1692622535621" duration="3433000" />
+      <workItem from="1692694241426" duration="6206000" />
+      <workItem from="1693044935929" duration="1078000" />
+      <workItem from="1693046017869" duration="430000" />
+      <workItem from="1693825463712" duration="611000" />
+      <workItem from="1700053614274" duration="78000" />
+      <workItem from="1700483979837" duration="5700000" />
     </task>
+    <task id="LOCAL-00001" summary="Add serial connection to Sam">
+      <created>1691589015247</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1691589015247</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add toolbar (WIP)">
+      <created>1692193131512</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1692193131512</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add state machine">
+      <created>1692555324866</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1692555324867</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add ColorFactory (WIP)">
+      <created>1692625958923</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692625958923</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix hover/selection repaint">
+      <created>1692695543328</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1692695543328</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add tray rendering">
+      <created>1692699364688</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1692699364688</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,5 +179,25 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add serial connection to Sam" />
+    <MESSAGE value="Add toolbar (WIP)" />
+    <MESSAGE value="Add state machine" />
+    <MESSAGE value="Add ColorFactory (WIP)" />
+    <MESSAGE value="Fix hover/selection repaint" />
+    <MESSAGE value="Add tray rendering" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add tray rendering" />
   </component>
 </project>
