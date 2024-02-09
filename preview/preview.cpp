@@ -7,7 +7,7 @@
 namespace sampleride
 {
 
-    Preview::Preview(QWidget* parent) : QWidget(parent), scale(1.1)
+    Preview::Preview(QWidget* parent) : QWidget(parent), scale(1.1), pos_log(0, 0)
     {
         setMinimumSize(QSize(sampleride::Classes::model()->base_size().x(), sampleride::Classes::model()->base_size().y()));
         //setStyleSheet("background-color: #ffffff;");
@@ -40,6 +40,10 @@ namespace sampleride
         {
             m->draw_preview(&qp);
         }
+
+        qp.resetTransform();
+
+        drawOverlay(&qp);
     }
 
     void Preview::mouseMoveEvent(QMouseEvent* event)
@@ -70,6 +74,10 @@ namespace sampleride
             sampleride::Classes::state()->set_hover();
             sampleride::Classes::state()->set_comp_hover();
         }
+
+        QPointF m_pos = event->position();
+        event2pos(m_pos);
+        pos_log = m_pos;
     }
 
     void Preview::mousePressEvent(QMouseEvent* event)
@@ -174,5 +182,13 @@ namespace sampleride
     {
         module_pos.setX(module_pos.x() * sampleride::Classes::model()->module_size().x());
         module_pos.setY(module_pos.y() * sampleride::Classes::model()->module_size().y());
+    }
+
+    void Preview::drawOverlay(QPainter* qp)
+    {
+        qp->setPen(QPen(QBrush(QColor(255, 255, 255)), 2));
+        qp->setBrush(QBrush());
+        qp->drawText(5, int(geometry().height()) - 5,
+                     QString("Pos: %1; %2").arg(QString::number(int(pos_log.x())), QString::number(int(pos_log.y()))));
     }
 } // namespace sampleride

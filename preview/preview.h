@@ -33,6 +33,7 @@ namespace sampleride
         void repaint_canvas();
     protected:
         void paintEvent(QPaintEvent* event) override;
+        void drawOverlay(QPainter* qp);
         void mousePressEvent(QMouseEvent* event) override;
         void mouseReleaseEvent(QMouseEvent* event) override;
         void mouseMoveEvent(QMouseEvent* event) override;
@@ -48,6 +49,7 @@ namespace sampleride
         QPointF pos;
         QPointF lastPos;
         QPointF pos_old;
+        QPointF pos_log;
         SamSerial serial;
     };
 
