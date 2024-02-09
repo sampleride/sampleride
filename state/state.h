@@ -20,19 +20,18 @@ namespace sampleride
         Q_OBJECT
     public:
         explicit State(QObject* parent = nullptr);
-        void set_selection(QPoint module, QPoint tray = none_pos);
+        void set_selection(QPoint module);
         void set_selection();
-        void set_hover(QPoint module, QPoint tray = none_pos);
+        void set_hover(QPoint module);
         void set_hover();
         void set_comp_hover(QPoint comp);
         void set_comp_hover();
         void set_comp_selection(QPoint comp);
         void unset_comp_selection(QPoint comp);
+        void set_comp_selection();
 
         QPoint module_select;
-        QPoint tray_select;
         QPoint module_hover;
-        QPoint tray_hover;
 
         QSet<QPoint> comp_select;
         QPoint comp_hover;
@@ -40,6 +39,7 @@ namespace sampleride
         static QPoint none_pos;
     signals:
         void set_color(QPoint module, ColorTypes col);
+        void update_preview();
     };
 
 } // namespace sampleride

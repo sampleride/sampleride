@@ -32,6 +32,8 @@ namespace sampleride
         const QPointF& module_spacing() const
         { return _module_spacing; }
 
+        static float map(float value, float in_min, float in_max, float out_min, float out_max);
+
     protected:
         QPointF _base_size;
         QRectF _table_size;

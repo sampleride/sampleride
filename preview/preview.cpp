@@ -81,6 +81,7 @@ namespace sampleride
         }
         else if (event->buttons() & Qt::RightButton)
         {
+            // TODO move this code to other function
             QPointF xy = event->position();
             if (event2pos(xy))
             {
@@ -133,7 +134,9 @@ namespace sampleride
 
                 if (sampleride::Classes::modulemanager()->module_pos.contains(module))
                 {
-                    sampleride::Classes::state()->set_selection(module);
+                    event2modulesize(m_pos);
+                    if (!sampleride::Classes::modulemanager()->module_pos[module]->_model.click(m_pos))
+                        sampleride::Classes::state()->set_selection(module);
                     return;
                 }
             }

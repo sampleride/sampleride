@@ -21,12 +21,14 @@ namespace sampleride
     {
         // TODO load from config
         SimpleTray* tray = new SimpleTray(this);
+        tray->_id = 0;
         Module* mod = qobject_cast<Module*>(tray);
 
         if (!mod)
         {
             // could not cast
         }
+        // TODO add runtime id management
         modules[tray->_id] = mod;
         module_pos[tray->_model._pos] = mod;
         sampleride::Classes::color()->module_map.insert(tray->_id, 0);
@@ -36,24 +38,35 @@ namespace sampleride
 
     void ModuleManager::set_color(QPoint module, ColorTypes col)
     {
+        if (!module_pos.contains(module))
+            return;
         Module* mod = module_pos[module];
         QColor* new_color = sampleride::Classes::color()->getColor(mod->_id, col);
         if (mod->_color != new_color)
         {
-            //std::cout << ".";
-            mod->_color = new_color;
+            if (col == ColorTypes::FG || col == ColorTypes::FG_HOVER || col == ColorTypes::FG_SELECT)
+                mod->_color = new_color;
             emit update_preview();
         }
     }
 
-    ColorFactory::ColorFactory(QObject* parent) : QObject(parent), used_colors(0), _palette({new QColor(50, 230, 40)})
+    bool ModuleManager::same_module(int id, QPoint rhs)
+    {
+        if (module_pos.contains(rhs) && module_pos[rhs]->_id == id)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    ColorFactory::ColorFactory(QObject* parent) : QObject(parent), used_colors(0), _palette({new QColor(44, 209, 35)})
     {
         for (QColor* col : _palette)
         {
-            _hover.push_back(new QColor(col->toHsl().lighter(175)));
-            _select.push_back(new QColor(col->toHsl().lighter(200)));
-            _comp_hover.push_back(new QColor(col->toHsl().darker(175)));
-            _comp_select.push_back(new QColor(col->toHsl().darker(200)));
+            _hover.push_back(new QColor(col->toHsl().lighter(125)));
+            _select.push_back(new QColor(col->toHsl().lighter(175)));
+            _comp_hover.push_back(new QColor(col->toHsl().lighter(200)));
+            _comp_select.push_back(new QColor(col->toHsl().lighter(250)));
         }
     }
 

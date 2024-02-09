@@ -32,20 +32,34 @@ namespace sampleride
     {
         qp->setPen(QPen(QBrush(*_color), 2));
         QPointF pt = _model.get_pos();
-        qp->drawRect(int(pt.x()), int(pt.y()), _model._size.width(), _model._size.height());
-        qp->drawText(int(pt.x()), int(pt.y()) - 5, _name);
 
-        //for (QRectF rect : *_model.get_vials())
-        QPoint vials_num = _model._data["vials_num"].value<QPoint>();
-        for (size_t i = 0; i < _model.get_vials()->size(); i++)
+        qp->drawRect(int(pt.x()), int(pt.y()), _model._size.width(), _model._size.height());
+        if (sampleride::Classes::modulemanager()->same_module(_id, sampleride::Classes::state()->module_hover)
+        || sampleride::Classes::modulemanager()->same_module(_id, sampleride::Classes::state()->module_select))
         {
-            QRectF rect = _model.get_vials()->at(i);
-            QPoint comp = QPoint(i % vials_num.x(), i / vials_num.y());
-            if (sampleride::Classes::state()->comp_hover == comp)
-                qp->setPen(QPen(QBrush(*sampleride::Classes::color()->getColor(_id, ColorTypes::FG_COMP_HOVER)), 2));
-            else
-                qp->setPen(QPen(QBrush(*_color), 2));
-            qp->drawEllipse(rect);
+            qp->drawText(int(pt.x()), int(pt.y()) - 5, _name);
+        }
+
+        QPoint vials_num = _model._data["vials_num"].value<QPoint>();
+        for (size_t i = 0; i < vials_num.x(); i++)
+        {
+            for (size_t j = 0; j < vials_num.y(); j++)
+            {
+                QPoint comp = QPoint(i, j);
+                QRectF rect = _model.get_vials()->value(comp);
+                if (sampleride::Classes::state()->comp_hover == comp)
+                    qp->setPen(QPen(QBrush(*sampleride::Classes::color()->getColor(
+                            _id, ColorTypes::FG_COMP_HOVER)), 2));
+                else
+                {
+                    if (sampleride::Classes::state()->comp_select.contains(comp))
+                        qp->setPen(QPen(QBrush(*sampleride::Classes::color()->getColor(
+                                _id, ColorTypes::FG_COMP_SELECT)), 2));
+                    else
+                        qp->setPen(QPen(QBrush(*_color), 2));
+                }
+                qp->drawEllipse(rect);
+            }
         }
     }
 
@@ -71,7 +85,7 @@ namespace sampleride
         _data.insert("vials_num", QVariant::fromValue(vials_num));
         _data.insert("radius", QVariant::fromValue(radius));
 
-        QList<QRectF>* vials = new QList<QRectF>;
+        QHash<QPoint, QRectF>* vials = new QHash<QPoint, QRectF>;
 
         QPointF r = QPointF(radius, radius);
         for (size_t i = 0; i < vials_num.x(); i++)
@@ -79,7 +93,7 @@ namespace sampleride
             for (size_t j = 0; j < vials_num.y(); j++)
             {
                 QPointF s = QPointF(spacing.x() * float(i), spacing.y() * float(j));
-                vials->push_back(QRectF(get_pos() + vial_centers.topLeft() - r + s,
+                vials->insert(QPoint(i, j), QRectF(get_pos() + vial_centers.topLeft() - r + s,
                                        get_pos() + vial_centers.topLeft() + r + s));
             }
         }
@@ -95,35 +109,66 @@ namespace sampleride
                  sampleride::Classes::model()->module_spacing().y() + sampleride::Classes::model()->table_size().y()};
     }
 
-    QList<QRectF>* PhysicalModel::get_vials() const
+    QHash<QPoint, QRectF>* PhysicalModel::get_vials() const
     {
         if (*_type != ModuleTypes::Tray || !init)
         {
             // TODO raise exception
             return nullptr;
         }
-        return _data["vials"].value<QList<QRectF>*>();
+        return _data["vials"].value<QHash<QPoint, QRectF>*>();
     }
 
-    void PhysicalModel::hover(QPointF pos)
+    bool PhysicalModel::hover(QPointF pos)
     {
         switch (*_type)
         {
             case ModuleTypes::Tray:
-                QRectF centers = _data["vial_centers"].value<QRectF>();
-                QPointF spacing = _data["spacing"].value<QPointF>();
-                float radius = _data["radius"].value<float>();
+                QPoint num = _data["vials_num"].value<QPoint>();
 
-                QPointF vial = QPointF(pos.x() / (2 * radius + spacing.x()), pos.y() / (2 * radius + spacing.y()));
-                // TODO add spacing check
-                sampleride::Classes::state()->set_comp_hover(vial.toPoint());
-                break;
+                QPoint res = _tray_vial(pos);
+                if (res.x() < 0 || res.y() < 0 || res.x() >= num.x() || res.y() >= num.y())
+                {
+                    sampleride::Classes::state()->set_comp_hover();
+                    return false;
+                }
+
+                sampleride::Classes::state()->set_comp_hover(res);
+                return true;
         }
+        return false;
     }
 
-    void PhysicalModel::click(QPointF pos)
+    bool PhysicalModel::click(QPointF pos)
     {
+        switch (*_type)
+        {
+            case ModuleTypes::Tray:
+                QPoint num = _data["vials_num"].value<QPoint>();
 
+                QPoint res = _tray_vial(pos);
+                if (res.x() < 0 || res.y() < 0 || res.x() >= num.x() || res.y() >= num.y())
+                {
+                    return false;
+                }
+
+                if (sampleride::Classes::state()->comp_select.contains(res))
+                    sampleride::Classes::state()->unset_comp_selection(res);
+                else
+                    sampleride::Classes::state()->set_comp_selection(res);
+                return true;
+        }
+        return false;
+    }
+
+    QPoint PhysicalModel::_tray_vial(QPointF pos)
+    {
+        QRectF centers = _data["vial_centers"].value<QRectF>();
+        float radius = _data["radius"].value<float>();
+        QPoint num = _data["vials_num"].value<QPoint>();
+
+        return QPoint((sampleride::Model::map(pos.x(), centers.x(), centers.width(), 0, num.x())),
+                               (sampleride::Model::map(pos.y(), centers.y(), centers.height(), 0, num.y())));
     }
 
     Vial::Vial(QObject* parent) : QObject(parent), liquid(-1), volume_ml(0)

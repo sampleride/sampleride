@@ -8,7 +8,7 @@ namespace sampleride
 {
     QPoint State::none_pos = QPoint(-1, -1);
 
-    State::State(QObject* parent) : QObject(parent), module_select(none_pos), tray_select(none_pos), module_hover(none_pos), tray_hover(none_pos), comp_hover(none_pos)
+    State::State(QObject* parent) : QObject(parent), module_select(none_pos), module_hover(none_pos), comp_hover(none_pos)
     {
 
     }
@@ -18,38 +18,42 @@ namespace sampleride
         if (module_select != none_pos)
             emit set_color(module_select, ColorTypes::FG);
         module_select = none_pos;
-        tray_select = none_pos;
 
         comp_hover = none_pos;
         comp_select.clear();
+        emit update_preview();
     }
 
     void State::set_comp_hover(QPoint comp)
     {
+        if (module_hover != none_pos && comp_hover != comp)
+            emit set_color(module_hover, ColorTypes::FG_COMP_HOVER);
         comp_hover = comp;
     }
 
     void State::set_comp_selection(QPoint comp)
     {
         comp_select.insert(comp);
+        update_preview();
     }
 
     void State::unset_comp_selection(QPoint comp)
     {
         comp_select.remove(comp);
+        update_preview();
     }
 
     void State::set_comp_hover()
     {
         comp_hover = none_pos;
+        update_preview();
     }
 
-    void State::set_hover(QPoint module, QPoint tray)
+    void State::set_hover(QPoint module)
     {
         if (module_hover != none_pos && module_hover != module_select && module_hover != module)
             emit set_color(module_hover, ColorTypes::FG);
         module_hover = module;
-        tray_hover = tray;
         if (module_hover != none_pos && module_hover != module_select)
             emit set_color(module_hover, ColorTypes::FG_HOVER);
     }
@@ -59,10 +63,9 @@ namespace sampleride
         if (module_hover != none_pos && module_hover != module_select)
             emit set_color(module_hover, ColorTypes::FG);
         module_hover = none_pos;
-        tray_hover = none_pos;
     }
 
-    void State::set_selection(QPoint module, QPoint tray)
+    void State::set_selection(QPoint module)
     {
         if (module_select != none_pos && module_hover != module)
             emit set_color(module_select, ColorTypes::FG);
@@ -74,9 +77,13 @@ namespace sampleride
         }
 
         module_select = module;
-        tray_select = tray;
         if (module_select != none_pos)
             emit set_color(module_select, ColorTypes::FG_SELECT);
+    }
+
+    void State::set_comp_selection()
+    {
+        comp_select.clear();
     }
 
 } // namespace sampleride

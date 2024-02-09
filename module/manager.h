@@ -23,6 +23,7 @@ namespace sampleride
         explicit ModuleManager(QObject* parent = nullptr);
         void initModules();
         Module* getModule(int id);
+        bool same_module(int id, QPoint rhs);
 
         QHash<int, Module*> modules;
         QHash<QPoint, Module*> module_pos;

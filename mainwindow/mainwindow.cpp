@@ -24,6 +24,7 @@ namespace sampleride
         preview = new Preview(this);
         sampleride::Classes::_preview = preview;
         connect(&_manager, &ModuleManager::update_preview, preview, &Preview::repaint_canvas);
+        connect(&_state, &State::update_preview, preview, &Preview::repaint_canvas);
 
         QDockWidget* sdock = new QDockWidget("Sequence", this);
         sdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
