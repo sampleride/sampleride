@@ -20,6 +20,7 @@
 #include "model/model.h"
 #include "module/manager.h"
 #include "state/state.h"
+#include "sequence/sequence.h"
 
 namespace sampleride
 {

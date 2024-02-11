@@ -9,7 +9,7 @@
 namespace sampleride
 {
 
-    sampleride::Module::Module(QObject* parent, QPoint vials) : QObject(parent), _type(ModuleTypes::None), _model(this, &_type), vials_size(vials), _vials(vials.x(), QList<Vial*>(vials.y(),
+    sampleride::Module::Module(QObject* parent, QPoint vials) : QObject(parent), _type(ModuleTypes::None), _flags(ModuleFlags(0)), _model(this, _type, _flags), vials_size(vials), _vials(vials.x(), QList<Vial*>(vials.y(),
                                                                                                                                                                                         nullptr))
     {
 
@@ -18,7 +18,7 @@ namespace sampleride
     SimpleTray::SimpleTray(QObject* parent) : Module(parent)
     {
         _type = ModuleTypes::Tray;
-        _model._type = &_type;
+        _model._type = _type;
 
         _model._size = QRectF(0, 0, 100, 70);
         _model._pos = QPoint(0, 0);
@@ -63,14 +63,14 @@ namespace sampleride
         }
     }
 
-    PhysicalModel::PhysicalModel(QObject* parent, ModuleTypes* type) : QObject(parent), _type(type), init(false)
+    PhysicalModel::PhysicalModel(QObject* parent, ModuleTypes type, ModuleFlags flags) : QObject(parent), _type(type), _flags(flags), init(false)
     {
 
     }
 
     void PhysicalModel::setup_tray(QRectF vial_centers, QPoint vials_num, float radius)
     {
-        if (*_type != ModuleTypes::Tray)
+        if (_type != ModuleTypes::Tray)
         {
             // TODO raise exception
             return;
@@ -111,7 +111,7 @@ namespace sampleride
 
     QHash<QPoint, QRectF>* PhysicalModel::get_vials() const
     {
-        if (*_type != ModuleTypes::Tray || !init)
+        if (_type != ModuleTypes::Tray || !init)
         {
             // TODO raise exception
             return nullptr;
@@ -121,7 +121,7 @@ namespace sampleride
 
     bool PhysicalModel::hover(QPointF pos)
     {
-        switch (*_type)
+        switch (_type)
         {
             case ModuleTypes::Tray:
                 QPoint num = _data["vials_num"].value<QPoint>();
@@ -141,7 +141,7 @@ namespace sampleride
 
     bool PhysicalModel::click(QPointF pos)
     {
-        switch (*_type)
+        switch (_type)
         {
             case ModuleTypes::Tray:
                 QPoint num = _data["vials_num"].value<QPoint>();
@@ -164,7 +164,6 @@ namespace sampleride
     QPoint PhysicalModel::_tray_vial(QPointF pos)
     {
         QRectF centers = _data["vial_centers"].value<QRectF>();
-        float radius = _data["radius"].value<float>();
         QPoint num = _data["vials_num"].value<QPoint>();
 
         return QPoint((sampleride::Model::map(pos.x(), centers.x(), centers.width(), 0, num.x())),

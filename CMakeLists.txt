@@ -35,7 +35,11 @@ add_executable(sampleride
         server/server.cpp
         server/server.h
         state/state.h
-        state/state.cpp)
+        state/state.cpp
+        sequence/sequence.cpp
+        sequence/sequence.h
+        sequence/action.cpp
+        sequence/action.h)
 target_link_libraries(sampleride PRIVATE
   Qt::Core
   Qt::Gui

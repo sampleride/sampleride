@@ -22,17 +22,19 @@ namespace sampleride
     {
         Q_OBJECT
     public:
-        explicit PhysicalModel(QObject* parent = nullptr, ModuleTypes* type = new ModuleTypes(ModuleTypes::None));
+        explicit PhysicalModel(QObject* parent = nullptr, ModuleTypes type = ModuleTypes::None, ModuleFlags flags = ModuleFlags(0));
         void setup_tray(QRectF vial_centers, QPoint vials_num, float radius);
         QPointF get_pos() const;
         QHash<QPoint, QRectF>* get_vials() const;
         bool hover(QPointF pos);
         bool click(QPointF pos);
 
-        ModuleTypes* _type;
+        ModuleTypes _type;
+        ModuleFlags _flags;
         QRectF _size;
         QPointF _center;
         QPoint _pos;
+        float height;
         bool init;
         QVariantHash _data;
     protected:
@@ -64,6 +66,7 @@ namespace sampleride
         QColor* _color;
 
         ModuleTypes _type;
+        ModuleFlags _flags;
         PhysicalModel _model;
         QList<QList<Vial*>> _vials;
         QPoint vials_size;

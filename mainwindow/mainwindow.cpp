@@ -29,7 +29,7 @@ namespace sampleride
         QDockWidget* sdock = new QDockWidget("Sequence", this);
         sdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
         sdock->setFeatures(QDockWidget::DockWidgetMovable);
-        QWidget* seq = new QWidget(this);
+        Sequence* seq = new Sequence(this);
         seq->setMinimumSize(200, 400);
         sdock->setWidget(seq);
         addDockWidget(Qt::LeftDockWidgetArea, sdock);

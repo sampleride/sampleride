@@ -30,6 +30,11 @@ namespace sampleride
         Container = 5,
     };
 
+    enum class ModuleFlags
+    {
+        TrayNozzleContainer = 0b1,
+    };
+
 } // namespace sampleride
 
 #endif //SAMPLERIDE_ENUMS_H
