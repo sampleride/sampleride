@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QOpenGLWidget>
+#include <QTabWidget>
 
 #include "preview/preview.h"
 #include "api/classes.h"

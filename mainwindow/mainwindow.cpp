@@ -58,9 +58,10 @@ namespace sampleride
         QDockWidget* tooldock = new QDockWidget("Tools", this);
         tooldock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
         tooldock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-        tooldock->setTitleBarWidget(new QWidget());
+        tooldock->setTitleBarWidget(new QWidget(this));
 
-        QHBoxLayout* toolWrapper = new QHBoxLayout(this);
+        //QHBoxLayout* toolWrapper = new QHBoxLayout(this);
+        auto bar = new QTabWidget(this);
         QHBoxLayout* tool = new QHBoxLayout(this);
 
         QPushButton* home_act = new QPushButton("Home", this);
@@ -75,14 +76,25 @@ namespace sampleride
 
         tool->addSpacerItem(spacer);
 
-        QComboBox* combo = new QComboBox(this);
         QWidget* wid = new QWidget(this);
-        wid->setLayout(toolWrapper);
+        wid->setLayout(tool);
+        bar->addTab(wid, "Movement");
 
-        toolWrapper->addWidget(combo);
-        toolWrapper->addLayout(tool);
+        // Initialize execution tab
+        QHBoxLayout* tool2 = new QHBoxLayout(this);
+        auto cmp_btn = new QPushButton("Compile", this);
+        auto run_btn = new QPushButton("Run", this);
+        tool2->addWidget(cmp_btn);
+        tool2->addWidget(run_btn);
 
-        tooldock->setWidget(wid);
+        QSpacerItem* spacer2 = new QSpacerItem(40, 20, QSizePolicy::Expanding);
+        tool2->addSpacerItem(spacer2);
+
+        auto wid2 = new QWidget(this);
+        wid2->setLayout(tool2);
+        bar->addTab(wid2, "Code");
+
+        tooldock->setWidget(bar);
 
         addDockWidget(Qt::TopDockWidgetArea, tooldock);
     }
