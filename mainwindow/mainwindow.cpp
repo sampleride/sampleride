@@ -36,7 +36,7 @@ namespace sampleride
         sdock->setWidget(seq);
         addDockWidget(Qt::LeftDockWidgetArea, sdock);
 
-        QDockWidget* tdock = new QDockWidget("Timeline", this);
+        QDockWidget* tdock = new QDockWidget("Compilation", this);
         tdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
         tdock->setFeatures(QDockWidget::DockWidgetMovable);
 

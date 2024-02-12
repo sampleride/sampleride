@@ -68,6 +68,7 @@ namespace sampleride
                 if (sampleride::Classes::modulemanager()->module_pos.contains(module))
                 {
                     if (sampleride::Classes::state()->s_state == SelectorState::SelectModule ||
+                        sampleride::Classes::state()->s_state == SelectorState::SelectTray ||
                         sampleride::Classes::state()->s_state == SelectorState::Default)
                         sampleride::Classes::state()->set_hover(module);
                     event2modulesize(m_pos);
@@ -178,6 +179,7 @@ namespace sampleride
                             sampleride::Classes::state()->set_selection(module);
                             break;
                         case SelectorState::SelectTray:
+                            sampleride::Classes::state()->set_selection(module);
                             sampleride::Classes::modulemanager()->module_pos[module]->_model.click(m_pos);
                             break;
                     }

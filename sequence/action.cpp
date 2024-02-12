@@ -7,7 +7,7 @@
 namespace sampleride
 {
 
-    Action::Action(SequenceMeta* meta, QObject* parent) : QObject(parent), _meta(meta)
+    Action::Action(SequenceMeta* meta, QObject* parent) : QObject(parent), _meta(meta), row(-1)
     {
 
     }
@@ -78,9 +78,9 @@ namespace sampleride
         emit setSelectorState(SelectorState::SelectPos, SelectorFlags(0));
     }
 
-    TrayAction::TrayAction(SequenceMeta* meta, QObject* parent) : Action(meta, parent)
+    TrayAction::TrayAction(SequenceMeta* meta, QObject* parent) : Action(meta, parent), draw_tray(true), draw_module(true)
     {
-        _name = "Go to";
+        _name = "Go to vial";
     }
 
     void TrayAction::populateRow(QListWidget* lyt, int row)
@@ -113,7 +113,7 @@ namespace sampleride
         return btn;
     }
 
-    QHBoxLayout* TrayAction::_drawLayout(int row, bool drawTray, bool drawModule)
+    QHBoxLayout* TrayAction::_drawLayout(int row)
     {
         auto layout = new QHBoxLayout();
         auto nlabel = new QLabel(_name);
@@ -121,33 +121,66 @@ namespace sampleride
         auto spacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
         layout->addSpacerItem(spacer);
 
-        if (drawTray)
+        if (draw_tray)
         {
             auto btn = _drawTraySelector(row);
             layout->addWidget(btn);
+            connect(btn, &QPushButton::clicked, this, &TrayAction::_getPosition);
         }
-        if (drawModule)
+        if (draw_module)
         {
-            auto label = new QLabel("in");
+            auto label = new QLabel("in module");
             layout->addWidget(label);
             auto btn = _drawModuleSelector(row);
+            if (draw_tray)
+                btn->setDisabled(true);
             layout->addWidget(btn);
-            auto label2 = new QLabel("module");
-            layout->addWidget(label2);
         }
 
         return layout;
     }
 
+    void TrayAction::_getPosition()
+    {
+        // Drop selection
+        sampleride::Classes::state()->set_selection();
+        // Select single vial
+        emit setSelectorState(SelectorState::SelectTray, SelectorFlags(0));
+    }
+
+    void TrayAction::finishSelection(QListWidget* lyt, int row, SelectorState state, SelectorFlags flags)
+    {
+        auto item = lyt->item(row);
+        auto wid = lyt->itemWidget(item);
+
+        if (draw_tray)
+        {
+            auto btn_tray = qobject_cast<QPushButton*>(wid->findChild<QPushButton*>());
+            // There should be only one element
+            auto pos = *sampleride::Classes::state()->comp_select.begin();
+            btn_tray->setText(QString("%1,%2").arg(QString::number(pos.x()), QString::number(pos.y())));
+        }
+        if (draw_module)
+        {
+            auto children = wid->findChildren<QPushButton*>();
+            auto btn_module = qobject_cast<QPushButton*>(children[children.size() - 1]);
+            auto name = sampleride::Classes::modulemanager()->module_pos[sampleride::Classes::state()->module_select]->_name;
+            btn_module->setText(name);
+        }
+
+        sampleride::Classes::state()->set_selection();
+    }
+
     ModuleAction::ModuleAction(SequenceMeta* meta, QObject* parent) : TrayAction(meta, parent)
     {
-
+        draw_tray = false;
+        draw_module = true;
     }
 
     void ModuleAction::populateRow(QListWidget* lyt, int row)
     {
         auto wrapper = new QWidget();
-        auto layout = _drawLayout(row, false, true);
+        auto layout = _drawLayout(row);
         wrapper->setLayout(layout);
 
         auto item = new QListWidgetItem();

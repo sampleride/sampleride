@@ -23,14 +23,16 @@ namespace sampleride
         // Initializing actions
         _meta.meta.append(new Meta(&_meta, false));
         auto act = new MoveAction(&_meta, this);
-        connect(act, &Action::setSelectorState, this, &Sequence::setSelectorState);
+        connect(act, &Action::setSelectorState, this, &Sequence::actionActivated);
         _actions.append(act);
+        act->row = 0;
         act->populateRow(_lyt, 0);
 
         _meta.meta.append(new Meta(&_meta, false));
         auto act2 = new TrayAction(&_meta, this);
-        connect(act, &Action::setSelectorState, this, &Sequence::setSelectorState);
+        connect(act2, &Action::setSelectorState, this, &Sequence::actionActivated);
         _actions.append(act2);
+        act2->row = 1;
         act2->populateRow(_lyt, 1);
     }
 
@@ -46,6 +48,18 @@ namespace sampleride
     {
         emit finishSelection();
         cur_act = pos;
+    }
+
+    void Sequence::actionActivated(SelectorState state, SelectorFlags flags)
+    {
+        // Make sure that row matches with the selection
+        cur_act = qobject_cast<Action*>(sender())->row;
+
+        _lyt->blockSignals(true);
+        _lyt->setCurrentRow(cur_act);
+        _lyt->blockSignals(false);
+
+        emit setSelectorState(state, flags);
     }
 
 } // sampleride

@@ -18,6 +18,7 @@
 #include "api/enums.h"
 #include "model/model.h"
 #include "state/state.h"
+#include "module/manager.h"
 
 namespace sampleride
 {
@@ -54,6 +55,7 @@ namespace sampleride
     protected:
         QString _name;
         SequenceMeta* _meta;
+        int row;
     };
 
     class MoveAction : public Action
@@ -73,13 +75,18 @@ namespace sampleride
     public:
         explicit TrayAction(SequenceMeta* meta, QObject* parent = nullptr);
         void populateRow(QListWidget* lyt, int row) override;
+        void finishSelection(QListWidget* lyt, int row, SelectorState state, SelectorFlags flags) override;
+    public slots:
+        void _getPosition();
     protected:
-        QHBoxLayout* _drawLayout(int row, bool drawTray = true, bool drawModule = true);
+        QHBoxLayout* _drawLayout(int row);
         QPushButton* _drawTraySelector(int row);
         QPushButton* _drawModuleSelector(int row);
 
         QPoint _pos;
         QPoint _module;
+        bool draw_tray;
+        bool draw_module;
     };
 
     class ModuleAction : public TrayAction

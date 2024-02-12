@@ -95,6 +95,9 @@ namespace sampleride
 
     void State::drop_selection_state()
     {
+        if (s_state == SelectorState::Default)
+            return;
+
         emit selectionFinished(s_state, s_flags);
         if (int(s_flags) & int(SelectorFlags::MultipleSelections))
             return;
@@ -111,12 +114,14 @@ namespace sampleride
     {
         s_state = state;
         s_flags = flags;
+        emit update_preview();
     }
 
     void State::forceDropSelector()
     {
         s_state = SelectorState::Default;
         s_flags = SelectorFlags(0);
+        emit update_preview();
     }
 
 } // namespace sampleride

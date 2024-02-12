@@ -27,6 +27,7 @@ namespace sampleride
     public slots:
         void selectorFinished(SelectorState state, SelectorFlags flags);
         void actionSelected(int pos);
+        void actionActivated(SelectorState state, SelectorFlags flags);
     signals:
         void setSelectorState(SelectorState state, SelectorFlags flags);
         void finishSelection();
