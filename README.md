@@ -2,6 +2,8 @@
 
 Open pippeting robot controller and method editor
 
+![sampleride](https://raw.githubusercontent.com/sampleride/sampleride/main/.github/screen1.jpg)
+
 ## Features
 
 This software allows you to create protocols, execute them on hardware and control your robot
