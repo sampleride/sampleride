@@ -25,6 +25,7 @@ namespace sampleride
     protected:
         QList<Action*> _actions;
         QListWidget* _lyt;
+        SequenceMeta _meta;
     };
 
 } // sampleride

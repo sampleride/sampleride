@@ -39,7 +39,8 @@ add_executable(sampleride
         sequence/sequence.cpp
         sequence/sequence.h
         sequence/action.cpp
-        sequence/action.h)
+        sequence/action.h
+        resources/style.h)
 target_link_libraries(sampleride PRIVATE
   Qt::Core
   Qt::Gui

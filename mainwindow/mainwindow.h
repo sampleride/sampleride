@@ -22,6 +22,7 @@
 #include "module/manager.h"
 #include "state/state.h"
 #include "sequence/sequence.h"
+#include "resources/style.h"
 
 namespace sampleride
 {

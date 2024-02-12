@@ -12,6 +12,8 @@ namespace sampleride
     {
         setMinimumSize(800, 600);
 
+        setStyleSheet(app_style);
+
         sampleride::Classes::_model = &_model;
         sampleride::Classes::_manager = &_manager;
         sampleride::Classes::_state = &_state;
