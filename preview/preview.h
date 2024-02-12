@@ -10,6 +10,7 @@
 #include <QTransform>
 #include <QMouseEvent>
 #include <cmath>
+#include <QApplication>
 
 #include <iostream>
 

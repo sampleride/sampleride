@@ -11,6 +11,8 @@
 #include <QWidget>
 
 #include "action.h"
+#include "api/enums.h"
+#include "state/state.h"
 
 namespace sampleride
 {
@@ -22,8 +24,16 @@ namespace sampleride
         explicit Sequence(QWidget* parent = nullptr);
         void addAction(Action act);
 
+    public slots:
+        void selectorFinished(SelectorState state, SelectorFlags flags);
+        void actionSelected(int pos);
+    signals:
+        void setSelectorState(SelectorState state, SelectorFlags flags);
+        void finishSelection();
+
     protected:
         QList<Action*> _actions;
+        int cur_act;
         QListWidget* _lyt;
         SequenceMeta _meta;
     };

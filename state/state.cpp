@@ -8,7 +8,8 @@ namespace sampleride
 {
     QPoint State::none_pos = QPoint(-1, -1);
 
-    State::State(QObject* parent) : QObject(parent), module_select(none_pos), module_hover(none_pos), comp_hover(none_pos)
+    State::State(QObject* parent) : QObject(parent), module_select(none_pos), module_hover(none_pos), comp_hover(none_pos),
+    s_state(SelectorState::Default), s_flags(SelectorFlags(0)), pos_select(none_pos)
     {
 
     }
@@ -20,6 +21,7 @@ namespace sampleride
         module_select = none_pos;
 
         comp_hover = none_pos;
+        pos_select = none_pos;
         comp_select.clear();
         emit update_preview();
     }
@@ -84,6 +86,37 @@ namespace sampleride
     void State::set_comp_selection()
     {
         comp_select.clear();
+    }
+
+    void State::set_pos_selection(QPoint pos)
+    {
+        pos_select = pos;
+    }
+
+    void State::drop_selection_state()
+    {
+        emit selectionFinished(s_state, s_flags);
+        if (int(s_flags) & int(SelectorFlags::MultipleSelections))
+            return;
+        s_state = SelectorState::Default;
+        s_flags = SelectorFlags(0);
+    }
+
+    void State::set_pos_selection()
+    {
+        pos_select = none_pos;
+    }
+
+    void State::setSelectorState(SelectorState state, SelectorFlags flags)
+    {
+        s_state = state;
+        s_flags = flags;
+    }
+
+    void State::forceDropSelector()
+    {
+        s_state = SelectorState::Default;
+        s_flags = SelectorFlags(0);
     }
 
 } // namespace sampleride

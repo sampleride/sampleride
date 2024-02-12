@@ -17,6 +17,11 @@ namespace sampleride
 
     }
 
+    void Action::finishSelection(QListWidget* lyt, int row, SelectorState state, SelectorFlags flags)
+    {
+
+    }
+
     MoveAction::MoveAction(SequenceMeta* meta, QObject* parent) : Action(meta, parent)
     {
         _name = "Move to";
@@ -39,6 +44,7 @@ namespace sampleride
         y_pos->setMaximum(sampleride::Classes::model()->base_size().y());
 
         auto btn = new QPushButton("...");
+        connect(btn, &QPushButton::clicked, this, &MoveAction::_getPosition);
 
         layout->addWidget(x_pos);
         layout->addWidget(y_pos);
@@ -49,6 +55,27 @@ namespace sampleride
         item->setSizeHint({0, wrapper->sizeHint().height()});
         lyt->addItem(item);
         lyt->setItemWidget(item, wrapper);
+    }
+
+    void MoveAction::finishSelection(QListWidget* lyt, int row, SelectorState state, SelectorFlags flags)
+    {
+        auto item = lyt->item(row);
+        auto wid = lyt->itemWidget(item);
+
+        auto spin_x = qobject_cast<QSpinBox*>(wid->layout()->itemAt(1)->widget());
+        auto spin_y = qobject_cast<QSpinBox*>(wid->layout()->itemAt(2)->widget());
+
+        spin_x->setValue(sampleride::Classes::state()->pos_select.x());
+        spin_y->setValue(sampleride::Classes::state()->pos_select.y());
+
+        // TODO store this value or add getter function
+
+        sampleride::Classes::state()->set_pos_selection();
+    }
+
+    void MoveAction::_getPosition()
+    {
+        emit setSelectorState(SelectorState::SelectPos, SelectorFlags(0));
     }
 
     TrayAction::TrayAction(SequenceMeta* meta, QObject* parent) : Action(meta, parent)
@@ -110,5 +137,22 @@ namespace sampleride
         }
 
         return layout;
+    }
+
+    ModuleAction::ModuleAction(SequenceMeta* meta, QObject* parent) : TrayAction(meta, parent)
+    {
+
+    }
+
+    void ModuleAction::populateRow(QListWidget* lyt, int row)
+    {
+        auto wrapper = new QWidget();
+        auto layout = _drawLayout(row, false, true);
+        wrapper->setLayout(layout);
+
+        auto item = new QListWidgetItem();
+        item->setSizeHint({0, wrapper->sizeHint().height()});
+        lyt->addItem(item);
+        lyt->setItemWidget(item, wrapper);
     }
 } // sampleride

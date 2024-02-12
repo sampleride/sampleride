@@ -58,21 +58,30 @@ namespace sampleride
         }
         else
         {
+            // Hover
+            bool drop_hover = true;
             QPointF m_pos = event->position();
-            if (event2module(m_pos))
+            if (sampleride::Classes::state()->s_state != SelectorState::SelectPos && event2module(m_pos))
             {
                 QPoint module(int(m_pos.x()), int(m_pos.y()));
 
                 if (sampleride::Classes::modulemanager()->module_pos.contains(module))
                 {
-                    sampleride::Classes::state()->set_hover(module);
+                    if (sampleride::Classes::state()->s_state == SelectorState::SelectModule ||
+                        sampleride::Classes::state()->s_state == SelectorState::Default)
+                        sampleride::Classes::state()->set_hover(module);
                     event2modulesize(m_pos);
-                    sampleride::Classes::modulemanager()->module_pos[module]->_model.hover(m_pos);
-                    return;
+                    if (sampleride::Classes::state()->s_state == SelectorState::SelectTray ||
+                        sampleride::Classes::state()->s_state == SelectorState::Default)
+                        sampleride::Classes::modulemanager()->module_pos[module]->_model.hover(m_pos);
+                    drop_hover = false;
                 }
             }
-            sampleride::Classes::state()->set_hover();
-            sampleride::Classes::state()->set_comp_hover();
+            if (drop_hover)
+            {
+                sampleride::Classes::state()->set_hover();
+                sampleride::Classes::state()->set_comp_hover();
+            }
         }
 
         QPointF m_pos = event->position();
@@ -87,7 +96,7 @@ namespace sampleride
             lastPos = event->position() - pos;
             pos_old = pos;
         }
-        else if (event->buttons() & Qt::RightButton)
+        /*else if (event->buttons() & Qt::RightButton)
         {
             // TODO move this code to other function
             QPointF xy = event->position();
@@ -96,7 +105,7 @@ namespace sampleride
                 std::cout << xy.x() << "; " << xy.y() << std::endl;
                 serial.move(QVector3D(0, 0, 0), QVector3D(xy.x(), xy.y(), 0));
             }
-        }
+        }*/
     }
 
     void Preview::wheelEvent(QWheelEvent* event)
@@ -136,19 +145,49 @@ namespace sampleride
         if (pos == pos_old)
         {
             QPointF m_pos = event->position();
+
+            if (sampleride::Classes::state()->s_state == SelectorState::SelectPos)
+            {
+                if (!event2pos(m_pos))
+                {
+                    sampleride::Classes::state()->set_selection();
+                    sampleride::Classes::state()->drop_selection_state();
+                    return;
+                }
+                sampleride::Classes::state()->set_pos_selection(m_pos.toPoint());
+                sampleride::Classes::state()->drop_selection_state();
+                return;
+            }
+
             if (event2module(m_pos))
             {
+                // Get module
                 QPoint module(int(m_pos.x()), int(m_pos.y()));
 
                 if (sampleride::Classes::modulemanager()->module_pos.contains(module))
                 {
                     event2modulesize(m_pos);
-                    if (!sampleride::Classes::modulemanager()->module_pos[module]->_model.click(m_pos))
-                        sampleride::Classes::state()->set_selection(module);
+
+                    switch(sampleride::Classes::state()->s_state)
+                    {
+                        case SelectorState::Default:
+                            if (!sampleride::Classes::modulemanager()->module_pos[module]->_model.click(m_pos))
+                                sampleride::Classes::state()->set_selection(module);
+                            break;
+                        case SelectorState::SelectModule:
+                            sampleride::Classes::state()->set_selection(module);
+                            break;
+                        case SelectorState::SelectTray:
+                            sampleride::Classes::modulemanager()->module_pos[module]->_model.click(m_pos);
+                            break;
+                    }
+                    sampleride::Classes::state()->drop_selection_state();
                     return;
                 }
             }
+            // Drop current selection
             sampleride::Classes::state()->set_selection();
+            sampleride::Classes::state()->drop_selection_state();
         }
     }
 
@@ -188,7 +227,22 @@ namespace sampleride
     {
         qp->setPen(QPen(QBrush(QColor(255, 255, 255)), 2));
         qp->setBrush(QBrush());
-        qp->drawText(5, int(geometry().height()) - 5,
+        qp->drawText(QRect(QPoint(5, int(geometry().height()) - 20), QPoint(int(geometry().width() - 5), int(geometry().height()) - 5)),
                      QString("Pos: %1; %2").arg(QString::number(int(pos_log.x())), QString::number(int(pos_log.y()))));
+
+        auto pos = QRect(QPoint(int(geometry().width() / 2), int(geometry().height()) - 20),
+                         QPoint(int(geometry().width() - 5), int(geometry().height()) - 5));
+        switch (sampleride::Classes::state()->s_state)
+        {
+            case SelectorState::SelectModule:
+                qp->drawText(pos, QString("Select module"), QTextOption(Qt::AlignmentFlag::AlignRight));
+                break;
+            case SelectorState::SelectTray:
+                qp->drawText(pos, QString("Select vial(s)"), QTextOption(Qt::AlignmentFlag::AlignRight));
+                break;
+            case SelectorState::SelectPos:
+                qp->drawText(pos, QString("Select position to move"), QTextOption(Qt::AlignmentFlag::AlignRight));
+                break;
+        }
     }
 } // namespace sampleride

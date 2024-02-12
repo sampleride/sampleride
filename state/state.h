@@ -29,17 +29,27 @@ namespace sampleride
         void set_comp_selection(QPoint comp);
         void unset_comp_selection(QPoint comp);
         void set_comp_selection();
+        void set_pos_selection(QPoint pos);
+        void set_pos_selection();
+        void drop_selection_state();
 
         QPoint module_select;
         QPoint module_hover;
 
         QSet<QPoint> comp_select;
         QPoint comp_hover;
+        QPoint pos_select;
+        SelectorState s_state;
+        SelectorFlags s_flags;
 
         static QPoint none_pos;
+    public slots:
+        void setSelectorState(SelectorState state, SelectorFlags flags);
+        void forceDropSelector();
     signals:
         void set_color(QPoint module, ColorTypes col);
         void update_preview();
+        void selectionFinished(SelectorState state, SelectorFlags flags);
     };
 
 } // namespace sampleride

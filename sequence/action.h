@@ -15,7 +15,9 @@
 #include <QSet>
 
 #include "api/classes.h"
+#include "api/enums.h"
 #include "model/model.h"
+#include "state/state.h"
 
 namespace sampleride
 {
@@ -45,7 +47,10 @@ namespace sampleride
         explicit Action(SequenceMeta* meta, QObject* parent = nullptr);
 
         virtual void populateRow(QListWidget* lyt, int row);
+        virtual void finishSelection(QListWidget* lyt, int row, SelectorState state, SelectorFlags flags);
         friend Sequence;
+    signals:
+        void setSelectorState(SelectorState state, SelectorFlags flags);
     protected:
         QString _name;
         SequenceMeta* _meta;
@@ -57,6 +62,9 @@ namespace sampleride
     public:
         explicit MoveAction(SequenceMeta* meta, QObject* parent = nullptr);
         void populateRow(QListWidget* lyt, int row) override;
+        void finishSelection(QListWidget* lyt, int row, SelectorState state, SelectorFlags flags) override;
+    public slots:
+        void _getPosition();
     };
 
     class TrayAction : public Action
@@ -72,6 +80,14 @@ namespace sampleride
 
         QPoint _pos;
         QPoint _module;
+    };
+
+    class ModuleAction : public TrayAction
+    {
+        Q_OBJECT
+    public:
+        explicit ModuleAction(SequenceMeta* meta, QObject* parent = nullptr);
+        void populateRow(QListWidget* lyt, int row) override;
     };
 
 } // sampleride

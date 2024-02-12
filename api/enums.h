@@ -35,6 +35,19 @@ namespace sampleride
         TrayNozzleContainer = 0b1,
     };
 
+    enum class SelectorState
+    {
+        Default = 0,
+        SelectPos = 1,
+        SelectModule = 2,
+        SelectTray = 3
+    };
+
+    enum class SelectorFlags
+    {
+        MultipleSelections = 0b1,
+    };
+
 } // namespace sampleride
 
 #endif //SAMPLERIDE_ENUMS_H
