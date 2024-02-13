@@ -28,6 +28,9 @@ namespace sampleride
         void selectorFinished(SelectorState state, SelectorFlags flags);
         void actionSelected(int pos);
         void actionActivated(SelectorState state, SelectorFlags flags);
+
+        void compile();
+        void run();
     signals:
         void setSelectorState(SelectorState state, SelectorFlags flags);
         void finishSelection();

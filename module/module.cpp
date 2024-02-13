@@ -70,6 +70,13 @@ namespace sampleride
 
     void PhysicalModel::setup_tray(QRectF vial_centers, QPoint vials_num, float radius)
     {
+        // Configure the tray parameters
+        // Each vial here is actually a tray, so we take dimensions of the tray
+
+        // vial_centers: Rectangle between the center of top left vial and the bottom right vial
+        // vials_num: number of vials (x, y)
+        // radius: radius of each vial
+
         if (_type != ModuleTypes::Tray)
         {
             // TODO raise exception
@@ -103,6 +110,7 @@ namespace sampleride
 
     QPointF PhysicalModel::get_pos() const
     {
+        // Get module position
         return {int(sampleride::Classes::model()->module_size().x() + sampleride::Classes::model()->module_spacing().x()) * _pos.x() +
                  sampleride::Classes::model()->module_spacing().x() + sampleride::Classes::model()->table_size().x(),
                  int(sampleride::Classes::model()->module_size().y() + sampleride::Classes::model()->module_spacing().y()) * _pos.y() +

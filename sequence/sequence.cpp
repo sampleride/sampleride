@@ -8,6 +8,7 @@ namespace sampleride
 {
     Sequence::Sequence(QWidget* parent) : QWidget(parent), _meta(this), cur_act(-1)
     {
+        // TODO add new QHBoxLayout to this one and add "Add", "Delete" buttons
         auto layout = new QVBoxLayout(this);
 
         setLayout(layout);
@@ -60,6 +61,19 @@ namespace sampleride
         _lyt->blockSignals(false);
 
         emit setSelectorState(state, flags);
+    }
+
+    void Sequence::compile()
+    {
+        // TODO finish this compile function and connect it to "Compile" button
+        // Run over each action and execute them
+        // All warnings/errors should be added to the Compilation tab
+    }
+
+    void Sequence::run()
+    {
+        // TODO finish this execution function and connect it to "Run" button
+        // Compile the program and then send gcode
     }
 
 } // sampleride

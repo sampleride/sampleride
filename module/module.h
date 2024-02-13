@@ -20,6 +20,7 @@ namespace sampleride
 
     class PhysicalModel : public QObject
     {
+        // Handles real coordinates of the module
         Q_OBJECT
     public:
         explicit PhysicalModel(QObject* parent = nullptr, ModuleTypes type = ModuleTypes::None, ModuleFlags flags = ModuleFlags(0));

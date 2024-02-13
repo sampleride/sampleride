@@ -40,9 +40,9 @@ namespace sampleride
         void mouseMoveEvent(QMouseEvent* event) override;
         void wheelEvent(QWheelEvent* event) override;
 
-        bool event2pos(QPointF& click_pos) const;
-        bool event2module(QPointF& click_pos) const;
-        void event2modulesize(QPointF& module_pos) const;
+        bool event2pos(QPointF& click_pos) const;  // Get real coordinates from click
+        bool event2module(QPointF& click_pos) const;  // Get module from real coordinates
+        void event2modulesize(QPointF& module_pos) const; // Scale 0.0-1.0 position of click in module into real module size
 
         QTransform scale_tr;
         QTransform pos_tr;
